@@ -208,8 +208,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\source\repos\ClosedXML\ClosedXML\ClosedXML.csproj">
-      <Project>{48FBE5FC-FBA3-40AC-94E7-FC00E855BCDD}</Project>
+    <ProjectReference Include="..\ClosedXML\ClosedXML.csproj">
+      <Project>{5d02cea0-7df5-403d-86f5-66862c4cc45f}</Project>
       <Name>ClosedXML</Name>
     </ProjectReference>
     <ProjectReference Include="..\PatentsHelperCases\PatentsHelperCases.csproj">

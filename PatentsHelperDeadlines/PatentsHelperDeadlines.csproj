@@ -50,8 +50,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\source\repos\ClosedXML\ClosedXML\ClosedXML.csproj">
-      <Project>{48fbe5fc-fba3-40ac-94e7-fc00e855bcdd}</Project>
+    <ProjectReference Include="..\ClosedXML\ClosedXML.csproj">
+      <Project>{5d02cea0-7df5-403d-86f5-66862c4cc45f}</Project>
       <Name>ClosedXML</Name>
     </ProjectReference>
     <ProjectReference Include="..\PatentsHelperExcel\PatentsHelperExcel.csproj">

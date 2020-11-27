@@ -72,16 +72,16 @@
     <None Include="Resources\rn.xlsx" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\source\repos\ClosedXML\ClosedXML\ClosedXML.csproj">
-      <Project>{48fbe5fc-fba3-40ac-94e7-fc00e855bcdd}</Project>
-      <Name>ClosedXML</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ClosedXML\ClosedXML.csproj">
+      <Project>{5d02cea0-7df5-403d-86f5-66862c4cc45f}</Project>
+      <Name>ClosedXML</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
