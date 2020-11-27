@@ -1,0 +1,42 @@
+﻿<Window x:Class="PatentsHelperUi.Popups.RefrenceNumeralsInput"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PatentsHelperUi.Popups"
+        xmlns:ui="http://schemas.modernwpf.com/2019" xmlns:behaviors="clr-namespace:PatentsHelperUi.Helpers" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        Title="Add Reference Numeral" Height="300" Width="500">
+    <Grid Margin="10,10,10,0">
+        <DockPanel>
+            <ui:SimpleStackPanel DockPanel.Dock="Top">
+                <StackPanel Orientation="Vertical">
+                    <ui:NumberBox KeyboardNavigation.TabIndex="0" Margin="10,10,10,0" Header="Number"  Description="{Binding HighestNumberMessage}" Value="{Binding RnNumber, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SpinButtonPlacementMode="Inline" >
+                <i:Interaction.Behaviors>
+                    <behaviors:PutCursorAtEndTextBoxBehavior/>
+                </i:Interaction.Behaviors>
+            </ui:NumberBox>
+            <Label Content="Reference Numeral already exists" Margin="10,0,10,0" HorizontalContentAlignment="Right" Foreground="{StaticResource InvalidBrush}" Visibility="{Binding RnErrorVisiblity, Mode=OneWay}"/>
+                </StackPanel>
+                <TextBox KeyboardNavigation.TabIndex="1" Margin="10,-6,10,25" ui:ControlHelper.Header="Value" Text="{Binding RnValue, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">
+                <i:Interaction.Behaviors>
+                    <behaviors:PutCursorAtEndTextBoxBehavior/>
+                </i:Interaction.Behaviors>
+            </TextBox>
+        </ui:SimpleStackPanel>
+            <DockPanel VerticalAlignment="Bottom" DockPanel.Dock="Bottom">
+                <Button KeyboardNavigation.TabIndex="2" Content="Save" Width="80" Style="{StaticResource AccentButtonStyle}" IsDefault="True" Command="{Binding SaveRnCommand}" HorizontalAlignment="Right" DockPanel.Dock="Right" Margin="10,10,10,20" />
+                <Button KeyboardNavigation.TabIndex="3" Content="Cancel" IsCancel="True" Width="80" HorizontalAlignment="Right" Margin="10,10,0,20" />
+            </DockPanel>
+        </DockPanel>
+
+
+        <Grid Visibility="{Binding LoadingOverlayVisibility,FallbackValue=Visible}">
+            <Canvas Background="{StaticResource SystemControlHighlightAltAltHighBrush}" Opacity="0.8" />
+            <ui:ProgressRing IsActive="True" Width="50" Height="50" />
+        </Grid>
+    </Grid>
+</Window>

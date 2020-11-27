@@ -1,0 +1,41 @@
+﻿<ui:ContentDialog x:Class="PatentsHelperUi.ContentDialogs.FolderPicker"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PatentsHelperUi.ContentDialogs"
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             PrimaryButtonText="Save"
+             DefaultButton="Primary"
+             Title="{Binding CaseName}"
+             PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+             CloseButtonText="Cancel"
+             mc:Ignorable="d" 
+             >
+    <Grid HorizontalAlignment="Left" Width="500" Height="100">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <TextBox ui:TextBoxHelper.IsDeleteButtonVisible="True"  ui:ControlHelper.Header="Case Location" Width="470"  Text="{Binding Location,UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True, ValidatesOnNotifyDataErrors=True}">
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate>
+                            <StackPanel>
+                                <AdornedElementPlaceholder x:Name="AdornedElementPlaceholder" />
+                                <ItemsControl ItemsSource="{Binding ElementName=AdornedElementPlaceholder, Path=AdornedElement.TemplatedParent.(Validation.Errors)}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ErrorContent}" Foreground="{StaticResource SystemControlErrorTextForegroundBrush}"/>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </ControlTemplate>
+                    </Validation.ErrorTemplate>
+                </TextBox>
+                <Button Command="{Binding PickFolderCommand}" Height="32" Width="31" VerticalAlignment="Bottom" Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
+                    <ui:FontIcon Glyph="&#xE1DA;" />
+                </Button>
+            </StackPanel>
+            <Label Content="" HorizontalAlignment="Left" Margin="10,83,0,0" VerticalAlignment="Top" Width="138" Height="24"  Foreground="{StaticResource SystemControlErrorTextForegroundBrush}" />
+        </StackPanel>
+    </Grid>
+</ui:ContentDialog>

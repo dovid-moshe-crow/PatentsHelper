@@ -1,24 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Xml.Linq;
+﻿using PatentsHelperUi;
+using System;
+using System.Windows;
 using Word = Microsoft.Office.Interop.Word;
-using Office = Microsoft.Office.Core;
-using Microsoft.Office.Tools.Word;
 
 namespace PatentsHelper
 {
     public partial class ThisAddIn
     {
+        readonly HotkeyManager hotkeyManager = new HotkeyManager();
+
         private void ThisAddIn_Startup(object sender, System.EventArgs e)
         {
+            var app = new App();
+            System.Windows.Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+            ModernWpfThemeManager.StartTheme();
+
+            hotkeyManager.Subscribe(ActionsManager.ReferenceNumeralAction);
+
+            Application.DocumentOpen += Application_DocumentOpen;
+
+
         }
 
-        private void ThisAddIn_Shutdown(object sender, System.EventArgs e)
+        private void Application_DocumentOpen(Word.Document Doc)
         {
+            ActionsManager.UpdateCaseLastUsedTime();
         }
 
+        private void ThisAddIn_Shutdown(object sender, EventArgs e)
+        {
+            hotkeyManager.Unsubscribe();
+            if (System.Windows.Application.Current != null)
+            {
+                System.Windows.Application.Current.Shutdown();
+            }
+        }
         #region VSTO generated code
 
         /// <summary>
@@ -30,7 +47,7 @@ namespace PatentsHelper
             this.Startup += new System.EventHandler(ThisAddIn_Startup);
             this.Shutdown += new System.EventHandler(ThisAddIn_Shutdown);
         }
-        
+
         #endregion
     }
 }

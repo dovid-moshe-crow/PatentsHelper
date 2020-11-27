@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace PatentsHelper.Properties {
+namespace PatentsHelperOutlook.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace PatentsHelper.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PatentsHelper.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("PatentsHelperOutlook.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,12 +61,12 @@ namespace PatentsHelper.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static System.Drawing.Bitmap icons8_innovation_48 {
+        internal static byte[] _default {
             get {
-                object obj = ResourceManager.GetObject("icons8_innovation_48", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
+                object obj = ResourceManager.GetObject("_default", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

@@ -1,0 +1,55 @@
+﻿<ui:ContentDialog x:Class="PatentsHelperUi.ContentDialogs.NewCase"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ui="http://schemas.modernwpf.com/2019"
+             xmlns:local="clr-namespace:PatentsHelperUi.ContentDialogs" xmlns:helpers="clr-namespace:PatentsHelperUi.Helpers" xmlns:usercontrols="clr-namespace:PatentsHelperUi.UserControls"
+                  mc:Ignorable="d" 
+             Title="New case"
+             PrimaryButtonText="Save"
+             CloseButtonText="Cancel"
+             DefaultButton="Primary"
+             PrimaryButtonClick="ContentDialog_PrimaryButtonClick"                  
+             >
+    <ui:ContentDialog.Resources>
+        <ResourceDictionary>
+            <DataTemplate x:Key="TextBox">
+            <TextBox Margin="0,5,5,5" Text="{Binding Text,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ui:ControlHelper.Header="{Binding Name}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="NumberBox">
+                <TextBox Margin="0,5,5,5" Text="{Binding Number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,TargetNullValue=''}" ui:ControlHelper.Header="{Binding Name}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="DatePicker">
+                <DatePicker Width="400" IsTodayHighlighted="True" Margin="0,5,5,5" Text="{Binding DateTime,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,TargetNullValue=''}" ui:ControlHelper.Header="{Binding Name}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="ToggleSwitch">
+                <ui:ToggleSwitch Margin="0,5,5,5" IsOn="{Binding Bool,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,TargetNullValue=''}" ui:ControlHelper.Header="{Binding Name}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="TimeSpan">
+                <TextBox Margin="0,5,5,5" Text="{Binding TimeSpan,StringFormat=hh\\:mm,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,TargetNullValue=''}" ui:ControlHelper.Header="{Binding Name}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="EmailInput">
+                <StackPanel Margin="0,5,5,5" >
+                    <usercontrols:EmailInput Text="{Binding DataContext.Text,Mode=TwoWay,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=StackPanel}}" Header="{Binding Path=DataContext.Name,RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=StackPanel},Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </DataTemplate>
+        </ResourceDictionary>
+    </ui:ContentDialog.Resources>
+    <ScrollViewer>
+        <StackPanel Width="500">
+        <ItemsControl  ItemsSource="{Binding Fields}" >
+                <ItemsControl.ItemTemplateSelector >
+                    <local:TypesDataTemplateSelector                        
+                        TextBoxTemplate="{StaticResource TextBox}"
+                        NumberBoxTemplate="{StaticResource NumberBox}"
+                        ToggleButtonTemplate="{StaticResource ToggleSwitch}"
+                        DatePickerTemplate="{StaticResource DatePicker}"
+                        TimeSpanTemplate="{StaticResource TimeSpan}"
+                        EmailInputTemplate="{StaticResource EmailInput}"
+                        />
+                </ItemsControl.ItemTemplateSelector>
+            </ItemsControl>
+    </StackPanel>
+    </ScrollViewer>
+</ui:ContentDialog>

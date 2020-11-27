@@ -1,0 +1,53 @@
+﻿<Page x:Class="PatentsHelperUi.Pages.SettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PatentsHelperUi.Pages"
+      xmlns:ui="http://schemas.modernwpf.com/2019"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="SettingsPage">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ui:ThemeResources />
+                <ui:XamlControlsResources />
+                <!-- Other merged dictionaries here -->
+            </ResourceDictionary.MergedDictionaries>
+            <!-- Other app resources here -->
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <ui:ScrollViewerEx>
+            <ui:SimpleStackPanel Margin="40">
+            <Label Content="Settings" FontSize="20" FontWeight="Bold" />
+                <ui:SimpleStackPanel Margin="0,30,10,10">
+                <ui:RadioButtons Header="Choose an app mode" FontSize="20" SelectedIndex="{Binding AppTheme, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SelectionChanged="ThemeSelector_SelectionChanged" >
+                    <RadioButton Content="Light" Tag="Light" />
+                        <RadioButton Content="Dark" Tag="Dark"/>
+                    </ui:RadioButtons>
+            </ui:SimpleStackPanel>
+                <ui:SimpleStackPanel Margin="0,30,10,10">
+                <Label Content="Reference Numerals" FontSize="20" Margin="0,0,0,20" />
+                    <ui:NumberBox Width="400" HorizontalAlignment="Left" Maximum="100" Minimum="1" Header="Reference Numeral Increment" Value="{Binding ReferenceNumeralIncrement,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                    <ui:SimpleStackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <ComboBox Width="248" ui:ControlHelper.Header="Reference Numeral keyboard shortcut" x:Name="RnShortcutFirstPartComboBox"  SelectedItem="{Binding RnShortcutFirst,Mode=TwoWay}" ItemsSource="{Binding ShortcutsFirst}"/>
+                        <ComboBox VerticalAlignment="Bottom" Margin="5,0,0,0" Width="105" x:Name="RnShortcutLastPartComboBox"  SelectedItem="{Binding RnShortcutLast,Mode=TwoWay}" ItemsSource="{Binding ShortcutsLast}"/>
+                </ui:SimpleStackPanel>
+            </ui:SimpleStackPanel>
+                <ui:SimpleStackPanel Margin="0,30,10,10">
+                    <ComboBox Width="400"  HorizontalAlignment="Left" ui:ControlHelper.Header="Date Format" IsEditable="True" Margin="0,0,0,10" SelectedValue="{Binding DateFormat, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding DateFormats}" />
+                    <ui:SimpleStackPanel Orientation="Horizontal" Margin="0,0,0,10"  >
+                        <TextBox Width="472" ui:ControlHelper.Header="Cases root folder" IsReadOnly="True" Text="{Binding CasesRootFolder, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                        <Button Style="{StaticResource DateTimePickerFlyoutButtonStyle}" Height="30" Width="30" VerticalAlignment="Bottom" Command="{Binding SelectCasesRootFolderCommand}">
+                           <ui:FontIcon Glyph="&#xEC50;"/>
+                        </Button>
+                    </ui:SimpleStackPanel>
+                    <TextBox  ui:ControlHelper.Header="Cases email columns" Text="{Binding CasesEmailsColumns,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="400" HorizontalAlignment="Left" Margin="0,0,0,10" />
+                    <TextBox ui:ControlHelper.Header="Search Folder Scope" Width="400" HorizontalAlignment="Left" Margin="0,0,0,10" Text="{Binding SearchFolderScope, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                </ui:SimpleStackPanel>
+        </ui:SimpleStackPanel>
+        </ui:ScrollViewerEx>
+    </Grid>
+</Page>

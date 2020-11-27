@@ -1,0 +1,30 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PatentsHelperSettings.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="AppTheme" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">0</Value>
+    </Setting>
+    <Setting Name="CasesEmailsColumns" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Distribution-TO,Distribution-CC</Value>
+    </Setting>
+    <Setting Name="CasesRootFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="RnShortcutLast" Type="System.String" Scope="User">
+      <Value Profile="(Default)">D</Value>
+    </Setting>
+    <Setting Name="RnShortcutFirst" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Alt</Value>
+    </Setting>
+    <Setting Name="SearchFolderScope" Type="System.String" Scope="User">
+      <Value Profile="(Default)">'Inbox', 'Sent Items'</Value>
+    </Setting>
+    <Setting Name="DateFormat" Type="System.String" Scope="User">
+      <Value Profile="(Default)">MM/dd/yyyy</Value>
+    </Setting>
+    <Setting Name="ReferenceNumeralIncrement" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">2</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

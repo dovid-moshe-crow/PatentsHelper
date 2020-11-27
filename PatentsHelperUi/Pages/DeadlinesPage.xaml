@@ -1,0 +1,58 @@
+﻿<Page
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:PatentsHelperUi.Pages"
+      xmlns:UserControls="clr-namespace:PatentsHelperUi.UserControls" x:Class="PatentsHelperUi.Pages.DeadlinesPage"
+      mc:Ignorable="d" 
+      xmlns:ui="http://schemas.modernwpf.com/2019"
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="DeadlinesPage">
+    <Page.Resources>
+        <ResourceDictionary>
+            <Style TargetType="DataGridCell" BasedOn="{StaticResource DefaultDataGridCellStyle}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell" >
+                            <Border Background="Transparent" BorderThickness="0">
+                                <Border x:Name="border"
+                          BorderBrush="White"
+                          BorderThickness="0"
+                          Background="Transparent"
+                          >
+                                    <ContentPresenter />
+                                </Border>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="true">
+
+                                </DataTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <ui:CommandBar VerticalContentAlignment="Center">
+            <ui:AppBarButton Icon="OpenWith" Label="Open with Excel" Command="{Binding OpenInExcelCommand}" />
+            <ui:CommandBar.Content>
+                <StackPanel Orientation="Horizontal">
+                    <Button Command="{Binding RefreshCommand}" Style="{StaticResource DateTimePickerFlyoutButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0" >
+                        <Button.Content>
+                            <ui:SymbolIcon Symbol="Refresh" />
+                        </Button.Content>
+                    </Button>
+                    <ui:AutoSuggestBox VerticalAlignment="Center" Margin="10,0,0,0" Width="250" QueryIcon="Find" PlaceholderText="Filter" Text="{Binding Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                </StackPanel>
+            </ui:CommandBar.Content>
+        </ui:CommandBar>
+        <DataGrid ui:DataGridHelper.UseModernColumnStyles="True" Grid.Row="1" IsReadOnly="True" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Standard" AutoGenerateColumns="True" GridLinesVisibility="Horizontal" HeadersVisibility="Column" ItemsSource="{Binding DeadlinesList}" SelectionUnit="FullRow" SelectionMode="Single" CanUserAddRows="False"  />
+    </Grid>
+</Page>

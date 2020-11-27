@@ -1,0 +1,229 @@
+﻿<Page xmlns:UserControls="clr-namespace:PatentsHelperUi.UserControls"  x:Class="PatentsHelperUi.Pages.CasesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="http://schemas.modernwpf.com/2019"
+      xmlns:local="clr-namespace:PatentsHelperUi.Pages"
+      xmlns:helpers="clr-namespace:PatentsHelperUi.Helpers"
+      mc:Ignorable="d" 
+      d:DesignHeight="650" d:DesignWidth="1200"
+      Title="CasesPage">
+    <Page.Resources>
+        <ResourceDictionary>
+            <helpers:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+            <helpers:EnumToCollectionConverter x:Key="EnumToCollectionConverter" />
+            <Style x:Key="HatchOverlay" TargetType="Rectangle">
+                <Setter Property="Fill">
+                    <Setter.Value>
+                        <VisualBrush Opacity=".9" TileMode="Tile" Viewport="0,0,10,20" ViewportUnits="Absolute">
+                            <VisualBrush.Visual>
+                                <Canvas>
+                                    <Path Stroke="{StaticResource SystemControlBackgroundAccentBrush}" Data="M 0 0 l 10 20" />
+                                </Canvas>
+                            </VisualBrush.Visual>
+                        </VisualBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            <Style TargetType="DataGridCell" BasedOn="{StaticResource DefaultDataGridCellStyle}">
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="DataGridCell" >
+                            <Border Background="Transparent" BorderThickness="0">
+                                <Border x:Name="border"
+                          BorderBrush="White"
+                          BorderThickness="0"
+                          Background="Transparent"
+                          >
+                                    <ContentPresenter />
+                                </Border>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource Self}, Path=IsSelected}" Value="true">
+
+                                </DataTrigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+
+    </Page.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="10"/>
+            <ColumnDefinition Width="328"/>
+        </Grid.ColumnDefinitions>
+        <FrameworkElement x:Name="data" Visibility="Collapsed" Grid.ColumnSpan="2"/>
+
+        <Grid Margin="10,10,0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ui:CommandBar VerticalContentAlignment="Center" Height="40" >
+                <ui:AppBarButton Icon="Add" Label="New Case" Command="{Binding NewCaseCommand}"/>
+                <ui:AppBarButton Icon="OpenWith" Label="Open with Excel" Command="{Binding OpenCasesInExcelCommand}" />
+                <ui:CommandBar.Content>
+                    <StackPanel Orientation="Horizontal" >
+                        <Button Command="{Binding RefreshCommand}" Style="{StaticResource DateTimePickerFlyoutButtonStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0" >
+                            <Button.Content>
+                                <ui:SymbolIcon Symbol="Refresh" />
+                            </Button.Content>
+                        </Button>
+                        <ui:AutoSuggestBox VerticalAlignment="Center" Text="{Binding Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="250" Margin="10,0,0,0" QueryIcon="Filter" PlaceholderText="Filter"/>
+                        <ui:AppBarSeparator />
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                            <ui:SymbolIcon Symbol="Sort"  />
+                            <Label Content="Sort" HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="10,0,0,0" />
+                            <ComboBox
+                       ItemsSource="{Binding Path=SortOptions, Converter={StaticResource EnumToCollectionConverter}, Mode=OneTime}"
+                       SelectedValuePath="Value"
+                       DisplayMemberPath="Description"
+                       SelectedValue="{Binding Path=SortOptions}" 
+                       Margin="10,0,0,0" 
+                       Width="180" />
+                        </StackPanel>
+                    </StackPanel>
+                </ui:CommandBar.Content>
+            </ui:CommandBar>
+            <DataGrid ui:DataGridHelper.UseModernColumnStyles="True" Grid.Row="1" ItemsSource="{Binding CasesList}" SelectedItem="{Binding SelectedCase}" AutoGenerateColumns="False" IsReadOnly="True" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Standard" SelectionMode="Single" SelectionUnit="FullRow" GridLinesVisibility="Horizontal" HeadersVisibility="Column" Grid.RowSpan="2"  >
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding [0]}" Visibility="{Binding DataContext.CasesDataTable.Columns[0].ColumnName, Converter={StaticResource NullToVisibilityConverter}, FallbackValue=Collapsed, Source={x:Reference data}, TargetNullValue=Collapsed}" >
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="{Binding DataContext.CasesDataTable.Columns[0].ColumnName, Source={x:Reference data}}" />
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn  Binding="{Binding [1]}" Visibility="{Binding DataContext.CasesDataTable.Columns[1].ColumnName, Converter={StaticResource NullToVisibilityConverter}, FallbackValue=Collapsed, Source={x:Reference data}, TargetNullValue=Collapsed}">
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="{Binding DataContext.CasesDataTable.Columns[1].ColumnName, Source={x:Reference data}}" />
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn  Binding="{Binding [2]}" Visibility="{Binding DataContext.CasesDataTable.Columns[2].ColumnName, Converter={StaticResource NullToVisibilityConverter}, FallbackValue=Collapsed, Source={x:Reference data}, TargetNullValue=Collapsed}">
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="{Binding DataContext.CasesDataTable.Columns[2].ColumnName, Source={x:Reference data}}" />
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding [3]}" Visibility="{Binding DataContext.CasesDataTable.Columns[3].ColumnName, Converter={StaticResource NullToVisibilityConverter}, FallbackValue=Collapsed, Source={x:Reference data}, TargetNullValue=Collapsed}" >
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="{Binding DataContext.CasesDataTable.Columns[3].ColumnName, Source={x:Reference data}}" />
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding [4]}" Visibility="{Binding DataContext.CasesDataTable.Columns[4].ColumnName, Converter={StaticResource NullToVisibilityConverter}, FallbackValue=Collapsed, Source={x:Reference data}, TargetNullValue=Collapsed}" >
+                        <DataGridTextColumn.Header>
+                            <TextBlock Text="{Binding DataContext.CasesDataTable.Columns[4].ColumnName, Source={x:Reference data}}" />
+                        </DataGridTextColumn.Header>
+                    </DataGridTextColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+
+        <GridSplitter Grid.Column="1" Width="5"  HorizontalAlignment="Stretch" Margin="5,10,0,10" Background="Transparent"/>
+        <Grid Grid.Column="2" Background="{StaticResource SystemControlPageBackgroundListLowBrush}" Margin="0,10,10,10" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="180"/>
+                <RowDefinition Height="140" />
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Border Margin="10,10,10,0" BorderBrush="{StaticResource TextControlBorderBrush}" CornerRadius="3" BorderThickness="1" Grid.Row="0" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel HorizontalAlignment="Stretch" >
+                        <TextBlock Text="Deadlines" Margin="10,0,0,0" VerticalAlignment="Center" />
+                        <Button HorizontalAlignment="Right" ToolTip="New Deadline" Width="40" Command="{Binding CreateNewDeadlineCommand}"  Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
+                            <Button.Content>
+                                <ui:SymbolIcon Symbol="Add" />
+                            </Button.Content>
+                        </Button>
+
+                    </DockPanel>
+                    <Border Grid.Row="1" VerticalAlignment="Top" BorderBrush="{StaticResource TextControlBorderBrush}" BorderThickness="0,0,0,1" />
+                    <Rectangle Grid.Row="1" Margin="0,1,0,0" Visibility="{Binding DeadlinesOverlayVisibilty}" Style="{StaticResource HatchOverlay}" />
+                    <ScrollViewer Grid.Row="1" Margin="0,1,0,0">
+                        <ui:ItemsRepeater  ItemsSource="{Binding Deadlines}" >
+                            <ui:ItemsRepeater.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical" Margin="5">
+                                        <TextBlock Foreground="{StaticResource SystemControlBackgroundAccentBrush}" Text="{Binding DeadlineDate, StringFormat=MM/dd/yyyy}" />
+                                        <TextBlock Text="{Binding Title}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ui:ItemsRepeater.ItemTemplate>
+                        </ui:ItemsRepeater>
+                    </ScrollViewer>
+                </Grid>
+            </Border>
+            <Border Margin="10,10,10,0" BorderBrush="{StaticResource TextControlBorderBrush}" CornerRadius="3" BorderThickness="1" Grid.Row="1" >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="Outlook" Margin="10,0,0,0" VerticalAlignment="Center" />
+                    </StackPanel>
+                    <Border Grid.Row="1" VerticalAlignment="Top" BorderBrush="{StaticResource TextControlBorderBrush}" BorderThickness="0,0,0,1" />
+
+                    <Button  Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10" Command="{Binding CreateSearchFolderCommand}">
+                        <Button.Content>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Add Search Folder" />
+                            </StackPanel>
+                        </Button.Content>
+                    </Button>
+
+                    <Grid Grid.Row="1" Margin="10" Height="32" VerticalAlignment="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="263*"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedEmailTemplate}" ItemsSource="{Binding EmailTemplates}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="New Email" Grid.Column="1" Command="{Binding NewEmailCommand}">
+                            <Button.Content>
+                                <ui:SymbolIcon Symbol="MailForward" />
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                </Grid>
+            </Border>
+            <Border Margin="10" BorderBrush="{StaticResource TextControlBorderBrush}" CornerRadius="3" BorderThickness="1" Grid.Row="2">
+                <Grid >
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel HorizontalAlignment="Stretch" >
+                        <TextBlock Text="File System" VerticalAlignment="Center" Margin="10,0,0,0" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button ToolTip="Open in File Explorer" Command="{Binding OpenCurrentCaseInFileExplorerCommand}" HorizontalAlignment="Right" Width="40"  Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="MoveToFolder" />
+                                </Button.Content>
+                            </Button>
+                            <Button ToolTip="Link case to folder" Command="{Binding ChangeCaseLocationCommand}" HorizontalAlignment="Right" Width="40"  Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="Attach" />
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                    </DockPanel>
+                    <Border Grid.Row="1" VerticalAlignment="Top" BorderBrush="{StaticResource TextControlBorderBrush}" BorderThickness="0,0,0,1" />
+                    <UserControls:FolderTreeView Margin="0,1,0,0"  RootFolder="{Binding DataContext.RootFolder,Source={x:Reference data},UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Grid.Row="1"  />
+                </Grid>
+            </Border>
+        </Grid>
+    </Grid>
+</Page>

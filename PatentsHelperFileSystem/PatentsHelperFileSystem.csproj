@@ -1,0 +1,156 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\PropertyChanged.Fody.3.3.1\build\PropertyChanged.Fody.props" Condition="Exists('..\packages\PropertyChanged.Fody.3.3.1\build\PropertyChanged.Fody.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E46161A3-783A-4882-8563-88327D2A244F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PatentsHelperFileSystem</RootNamespace>
+    <AssemblyName>PatentsHelperFileSystem</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Ookii.Dialogs.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=66aa232afad40158, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ookii.Dialogs.Wpf.1.2.0\lib\net45\Ookii.Dialogs.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="PropertyChanged, Version=3.3.1.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
+      <HintPath>..\packages\PropertyChanged.Fody.3.3.1\lib\net40\PropertyChanged.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.4\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Vanara.Core, Version=3.2.19.0, Culture=neutral, PublicKeyToken=c37e4080322237fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vanara.Core.3.2.19\lib\net45\Vanara.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Vanara.PInvoke.ComCtl32, Version=3.2.19.0, Culture=neutral, PublicKeyToken=c37e4080322237fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vanara.PInvoke.ComCtl32.3.2.19\lib\net45\Vanara.PInvoke.ComCtl32.dll</HintPath>
+    </Reference>
+    <Reference Include="Vanara.PInvoke.Cryptography, Version=3.2.19.0, Culture=neutral, PublicKeyToken=c37e4080322237fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vanara.PInvoke.Cryptography.3.2.19\lib\net45\Vanara.PInvoke.Cryptography.dll</HintPath>
+    </Reference>
+    <Reference Include="Vanara.PInvoke.Gdi32, Version=3.2.19.0, Culture=neutral, PublicKeyToken=c37e4080322237fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vanara.PInvoke.Gdi32.3.2.19\lib\net45\Vanara.PInvoke.Gdi32.dll</HintPath>
+    </Reference>
+    <Reference Include="Vanara.PInvoke.Kernel32, Version=3.2.19.0, Culture=neutral, PublicKeyToken=c37e4080322237fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vanara.PInvoke.Kernel32.3.2.19\lib\net45\Vanara.PInvoke.Kernel32.dll</HintPath>
+    </Reference>
+    <Reference Include="Vanara.PInvoke.Ole, Version=3.2.19.0, Culture=neutral, PublicKeyToken=c37e4080322237fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vanara.PInvoke.Ole.3.2.19\lib\net45\Vanara.PInvoke.Ole.dll</HintPath>
+    </Reference>
+    <Reference Include="Vanara.PInvoke.SearchApi, Version=3.2.19.0, Culture=neutral, PublicKeyToken=c37e4080322237fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vanara.PInvoke.SearchApi.3.2.19\lib\net45\Vanara.PInvoke.SearchApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Vanara.PInvoke.Security, Version=3.2.19.0, Culture=neutral, PublicKeyToken=c37e4080322237fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vanara.PInvoke.Security.3.2.19\lib\net45\Vanara.PInvoke.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Vanara.PInvoke.Shared, Version=3.2.19.0, Culture=neutral, PublicKeyToken=c37e4080322237fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vanara.PInvoke.Shared.3.2.19\lib\net45\Vanara.PInvoke.Shared.dll</HintPath>
+    </Reference>
+    <Reference Include="Vanara.PInvoke.Shell32, Version=3.2.19.0, Culture=neutral, PublicKeyToken=c37e4080322237fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vanara.PInvoke.Shell32.3.2.19\lib\net45\Vanara.PInvoke.Shell32.dll</HintPath>
+    </Reference>
+    <Reference Include="Vanara.PInvoke.ShlwApi, Version=3.2.19.0, Culture=neutral, PublicKeyToken=c37e4080322237fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vanara.PInvoke.ShlwApi.3.2.19\lib\net45\Vanara.PInvoke.ShlwApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Vanara.PInvoke.User32, Version=3.2.19.0, Culture=neutral, PublicKeyToken=c37e4080322237fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vanara.PInvoke.User32.3.2.19\lib\net45\Vanara.PInvoke.User32.dll</HintPath>
+    </Reference>
+    <Reference Include="Vanara.Windows.Shell, Version=3.2.19.0, Culture=neutral, PublicKeyToken=c37e4080322237fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\Vanara.Windows.Shell.3.2.19\lib\net45\Vanara.Windows.Shell.dll</HintPath>
+    </Reference>
+    <Reference Include="WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WindowsBase.4.6.1055.0\lib\WindowsBase.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="DirectoryItem.cs" />
+    <Compile Include="DirectoryItemType.cs" />
+    <Compile Include="DirectoryStructure.cs" />
+    <Compile Include="FsUtils.cs" />
+    <Compile Include="Helpers\ConvertIconToImageSource.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\DirectoryItemViewModel.cs" />
+    <Compile Include="ViewModels\DirectoryStructureViewModel.cs" />
+    <Compile Include="ViewModels\RelayCommand.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FodyWeavers.xml" />
+    <None Include="Resources\icons8-folder-50.png" />
+    <None Include="Resources\icons8-opened-folder-50.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\Fody.6.3.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.3.0\build\Fody.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Fody.6.3.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.3.0\build\Fody.targets'))" />
+    <Error Condition="!Exists('..\packages\PropertyChanged.Fody.3.3.1\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PropertyChanged.Fody.3.3.1\build\PropertyChanged.Fody.props'))" />
+  </Target>
+</Project>

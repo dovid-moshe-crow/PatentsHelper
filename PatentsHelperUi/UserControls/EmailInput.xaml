@@ -1,0 +1,44 @@
+﻿<UserControl x:Class="PatentsHelperUi.UserControls.EmailInput"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PatentsHelperUi.UserControls"  
+             xmlns:ui="http://schemas.modernwpf.com/2019" xmlns:helpers="clr-namespace:PatentsHelperUi.Helpers"
+             d:DataContext="{d:DesignInstance local:EmailInputVM, IsDesignTimeCreatable=True,CreateList=True}"
+             mc:Ignorable="d" 
+              d:DesignWidth="400">
+    <UserControl.Resources>
+        <helpers:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+    </UserControl.Resources>
+    <StackPanel Orientation="Vertical">
+        <FrameworkElement x:Name="data" Visibility="Collapsed"/>
+        <TextBlock Text="{Binding Header}" Visibility="{Binding Header, Converter={ StaticResource NullToVisibilityConverter}}" Margin="0,0,0,5" />
+        <ui:ItemsRepeater x:Name="emailsItemRepeater" ItemsSource="{Binding Emails}" SnapsToDevicePixels="True" >
+            <ui:ItemsRepeater.ItemTemplate>
+                <DataTemplate>
+                    <Grid SnapsToDevicePixels="True">
+                        <Border Background="{StaticResource SystemControlPageBackgroundListLowBrush}" CornerRadius="2" Margin="2" >
+                        <StackPanel Orientation="Horizontal" Margin="3" Height="20">
+                            <TextBlock Text="{Binding}" VerticalAlignment="Center" Margin="3,0,0,0" />
+                            <Button Margin="3,0,0,0" Command="{Binding DataContext.DeleteEmailCommand,Source={x:Reference data}}" CommandParameter="{Binding}">
+                                <Button.Template>
+                                    <ControlTemplate>
+                                        <ui:SymbolIcon Symbol="Cancel" />
+                                    </ControlTemplate>
+                                </Button.Template>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                    </Grid>
+                </DataTemplate>
+            </ui:ItemsRepeater.ItemTemplate>
+            <ui:ItemsRepeater.Layout>
+                <ui:FlowLayout Orientation="Horizontal" MinColumnSpacing="5" MinRowSpacing="3" />
+            </ui:ItemsRepeater.Layout>
+        </ui:ItemsRepeater>
+        <ui:AutoSuggestBox ItemsSource="{Binding AllEmails}" QuerySubmitted="AutoSuggestBox_QuerySubmitted" Text="{Binding FilterEmails,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"  >
+      
+    </ui:AutoSuggestBox>
+    </StackPanel>
+</UserControl>

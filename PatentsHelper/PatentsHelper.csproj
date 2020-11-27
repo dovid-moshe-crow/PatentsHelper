@@ -26,13 +26,38 @@
     <NoStandardLibraries>false</NoStandardLibraries>
     <RootNamespace>PatentsHelper</RootNamespace>
     <AssemblyName>PatentsHelper</AssemblyName>
-    <LoadBehavior>3</LoadBehavior>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <IsWebBootstrapper>False</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
-    <BootstrapperComponentsLocation>HomeSite</BootstrapperComponentsLocation>
+    <PublishUrl>publish\</PublishUrl>
+    <InstallUrl />
+    <TargetCulture>en</TargetCulture>
+    <ApplicationVersion>1.0.0.4</ApplicationVersion>
+    <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateInterval>1</UpdateInterval>
+    <UpdateIntervalUnits>days</UpdateIntervalUnits>
+    <ProductName>PatentsHelper</ProductName>
+    <PublisherName />
+    <SupportUrl />
+    <FriendlyName>PatentsHelper</FriendlyName>
+    <OfficeApplicationDescription />
+    <LoadBehavior>3</LoadBehavior>
   </PropertyGroup>
   <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.8">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.8 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.VSTORuntime.4.0">
       <Visible>False</Visible>
       <ProductName>Microsoft Visual Studio 2010 Tools for Office Runtime %28x86 and x64%29</ProductName>
@@ -100,15 +125,25 @@
   -->
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="Gma.System.MouseKeyHook, Version=5.6.130.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\MouseKeyHook.5.6.0\lib\net40\Gma.System.MouseKeyHook.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Office.Tools.v4.0.Framework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -156,9 +191,20 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="ActionsManager.cs" />
+    <Compile Include="HotkeyManager.cs" />
+    <Compile Include="MainRibbon.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="MainRibbon.Designer.cs">
+      <DependentUpon>MainRibbon.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <EmbeddedResource Include="MainRibbon.resx">
+      <DependentUpon>MainRibbon.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -167,7 +213,11 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="PatentsHelper_TemporaryKey.pfx" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -187,9 +237,66 @@
     </Compile>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PatentsHelperCases\PatentsHelperCases.csproj">
+      <Project>{39D408A3-E75A-450D-8176-7BDD762C68E9}</Project>
+      <Name>PatentsHelperCases</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PatentsHelperDeadlines\PatentsHelperDeadlines.csproj">
+      <Project>{E87E1BE1-7181-4C4B-8D91-BF253BA94583}</Project>
+      <Name>PatentsHelperDeadlines</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PatentsHelperRn\PatentsHelperRn.csproj">
+      <Project>{C079938D-26D2-4A15-8EDD-39B5A2F70358}</Project>
+      <Name>PatentsHelperRn</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PatentsHelperSettings\PatentsHelperSettings.csproj">
+      <Project>{3F7ED9BE-263B-4639-B4BC-AA9F08024778}</Project>
+      <Name>PatentsHelperSettings</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PatentsHelperUi\PatentsHelperUi.csproj">
+      <Project>{C4AB7B87-79E9-464F-94FE-99337FF1DA7A}</Project>
+      <Name>PatentsHelperUi</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PatentsHelperWord\PatentsHelperWord.csproj">
+      <Project>{56C23DC4-7BA2-4C8E-BF4F-78B11E0FC171}</Project>
+      <Name>PatentsHelperWord</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-innovation-48.png" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>CD7D18D9C18F12CAF3C51480D12044FE5A842D77</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>VSTO40;DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>VSTO40;TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <LangVersion>7.3</LangVersion>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -200,8 +307,8 @@
     <VisualStudio>
       <FlavorProperties GUID="{BAA0C2D2-18E2-41B9-852F-F413020CAA33}">
         <ProjectProperties HostName="Word" HostPackage="{29A7B9D7-A7F1-4328-8EF0-6B2D1A56B2C1}" OfficeVersion="15.0" VstxVersion="4.0" ApplicationType="Word" Language="cs" TemplatesPath="" DebugInfoExeName="#Software\Microsoft\Office\16.0\Word\InstallRoot\Path#WINWORD.EXE" DebugInfoCommandLine="/x" AddItemTemplatesGuid="{51063C3A-E220-4D12-8922-BDA915ACD783}" />
-        <Host Name="Word" GeneratedCodeNamespace="PatentsHelper" IconIndex="0">
-          <HostItem Name="ThisAddIn" Code="ThisAddIn.cs" CanonicalName="ThisAddIn" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.cs" />
+        <Host Name="Word" GeneratedCodeNamespace="PatentsHelper" PublishedHash="69C324AB27932AA2FBF2B7EA72250886FF164DE6" IconIndex="0">
+          <HostItem Name="ThisAddIn" Code="ThisAddIn.cs" CanonicalName="AddIn" CanActivate="false" IconIndex="1" Blueprint="ThisAddIn.Designer.xml" GeneratedCode="ThisAddIn.Designer.cs" PublishedHash="78101F68A9ED8C18B712DC41020AEB9B282AFB90" />
         </Host>
       </FlavorProperties>
     </VisualStudio>
