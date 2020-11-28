@@ -264,7 +264,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icons8-innovation-48.png" />
+    <EmbeddedResource Include="Resources\icons8-innovation-48.png" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
