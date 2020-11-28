@@ -1,7 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace PatentsHelperFileSystem.ViewModels
@@ -47,7 +46,9 @@ namespace PatentsHelperFileSystem.ViewModels
             OnPropertyChanged(nameof(Items));
         }
 
-        public ObservableCollection<DirectoryItemViewModel> Items => new ObservableCollection<DirectoryItemViewModel>() { new DirectoryItemViewModel(RootFolder, DirectoryItemType.Folder) };
+        public ObservableCollection<DirectoryItemViewModel> Items => new ObservableCollection<DirectoryItemViewModel>(
+            DirectoryStructure.GetDirectoryItems(RootFolder).ConvertAll(root => new DirectoryItemViewModel(root.FullPath,root.Type))
+            );
 
         public string RootFolder { get; set; }
 

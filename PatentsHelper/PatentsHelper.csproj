@@ -1,5 +1,4 @@
 ﻿<Project ToolsVersion="16.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\MSBuild.Microsoft.VisualStudio.Tools.Office.targets.15.0.1\build\MSBuild.Microsoft.VisualStudio.Tools.Office.targets.props" Condition="Exists('..\packages\MSBuild.Microsoft.VisualStudio.Tools.Office.targets.15.0.1\build\MSBuild.Microsoft.VisualStudio.Tools.Office.targets.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <!--
     This section defines project-level properties.
@@ -36,7 +35,7 @@
     <PublishUrl>publish\</PublishUrl>
     <InstallUrl />
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>1.0.0.5</ApplicationVersion>
+    <ApplicationVersion>1.0.0.1</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>true</UpdateEnabled>
     <UpdateInterval>1</UpdateInterval>
@@ -230,6 +229,68 @@
     <Compile Include="ThisAddIn.cs">
       <SubType>Code</SubType>
     </Compile>
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\ClosedXML.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\cs\ModernWpf.resources.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\de\ModernWpf.resources.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\DocumentFormat.OpenXml.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\es\ModernWpf.resources.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\ExcelNumberFormat.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\fa\ModernWpf.resources.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\fr\ModernWpf.resources.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\fr\Vanara.Core.resources.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\FuzzySharp.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Gma.System.MouseKeyHook.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\it\ModernWpf.resources.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\ja\ModernWpf.resources.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\ko\ModernWpf.resources.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Microsoft.Bcl.AsyncInterfaces.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Microsoft.Office.Tools.Common.v4.0.Utilities.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\ModernWpf.Controls.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\ModernWpf.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Newtonsoft.Json.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Ookii.Dialogs.Wpf.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\PatentsHelper.dll.config.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\PatentsHelper.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\PatentsHelper.dll.manifest" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\PatentsHelper.vsto" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\PatentsHelperCases.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\PatentsHelperDeadlines.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\PatentsHelperExcel.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\PatentsHelperFileSystem.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\PatentsHelperOutlook.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\PatentsHelperRn.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\PatentsHelperSettings.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\PatentsHelperUi.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\PatentsHelperWord.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\pl\ModernWpf.resources.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\pt-BR\ModernWpf.resources.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\ru\ModernWpf.resources.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\System.Buffers.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\System.Memory.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\System.Numerics.Vectors.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\System.Runtime.CompilerServices.Unsafe.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\System.Text.Encodings.Web.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\System.Text.Json.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\System.Threading.Tasks.Extensions.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\System.ValueTuple.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\System.Windows.Interactivity.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\tr\ModernWpf.resources.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Vanara.Core.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Vanara.PInvoke.ComCtl32.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Vanara.PInvoke.Cryptography.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Vanara.PInvoke.Gdi32.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Vanara.PInvoke.Kernel32.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Vanara.PInvoke.Ole.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Vanara.PInvoke.SearchApi.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Vanara.PInvoke.Security.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Vanara.PInvoke.Shared.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Vanara.PInvoke.Shell32.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Vanara.PInvoke.ShlwApi.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Vanara.PInvoke.User32.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\Vanara.Windows.Shell.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\zh-Hans\ModernWpf.resources.dll.deploy" />
+    <None Include="publish\Application Files\PatentsHelper_1_0_0_0\zh-Hant\ModernWpf.resources.dll.deploy" />
+    <None Include="publish\PatentsHelper.vsto" />
     <None Include="ThisAddIn.Designer.xml">
       <DependentUpon>ThisAddIn.cs</DependentUpon>
     </None>
@@ -266,6 +327,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\icons8-innovation-48.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="publish\setup.exe" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -314,10 +378,4 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\MSBuild.Microsoft.VisualStudio.Tools.Office.targets.15.0.1\build\MSBuild.Microsoft.VisualStudio.Tools.Office.targets.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\MSBuild.Microsoft.VisualStudio.Tools.Office.targets.15.0.1\build\MSBuild.Microsoft.VisualStudio.Tools.Office.targets.props'))" />
-  </Target>
 </Project>
