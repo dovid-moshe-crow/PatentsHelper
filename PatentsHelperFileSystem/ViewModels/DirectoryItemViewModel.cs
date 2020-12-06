@@ -21,7 +21,7 @@ namespace PatentsHelperFileSystem.ViewModels
             {
                 if (Type == DirectoryItemType.File)
                 {
-                    return Vanara.Windows.Shell.ShellImageList.GetFileIcon(Name).ToImageSource();
+                    return System.Drawing.Icon.ExtractAssociatedIcon(FullPath).ToImageSource();
                 }
                 else
                 {

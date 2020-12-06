@@ -14,11 +14,11 @@
         <DockPanel>
             <ui:SimpleStackPanel DockPanel.Dock="Top">
                 <StackPanel Orientation="Vertical">
-                    <ui:NumberBox KeyboardNavigation.TabIndex="0" Margin="10,10,10,0" Header="Number"  Description="{Binding HighestNumberMessage}" Value="{Binding RnNumber, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" SpinButtonPlacementMode="Inline" >
+                    <TextBox KeyboardNavigation.TabIndex="0" Margin="10,10,10,0" ui:ControlHelper.Header="Number"  ui:ControlHelper.Description="{Binding HighestNumberMessage}" Text="{Binding RnNumber, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" >
                 <i:Interaction.Behaviors>
                     <behaviors:PutCursorAtEndTextBoxBehavior/>
                 </i:Interaction.Behaviors>
-            </ui:NumberBox>
+            </TextBox>
             <Label Content="Reference Numeral already exists" Margin="10,0,10,0" HorizontalContentAlignment="Right" Foreground="{StaticResource InvalidBrush}" Visibility="{Binding RnErrorVisiblity, Mode=OneWay}"/>
                 </StackPanel>
                 <TextBox KeyboardNavigation.TabIndex="1" Margin="10,-6,10,25" ui:ControlHelper.Header="Value" Text="{Binding RnValue, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}">

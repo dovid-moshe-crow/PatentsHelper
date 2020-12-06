@@ -20,6 +20,7 @@
     </Window.Resources>
     <Grid>
         <ui:NavigationView 
+           
             SelectionChanged="NavigationView_SelectionChanged"
             PaneDisplayMode="Auto"
             IsTabStop="False"

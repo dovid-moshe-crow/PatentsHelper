@@ -1,5 +1,7 @@
 ﻿using PatentsHelperExcel;
+using PatentsHelperSettings;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 namespace PatentsHelperCases
@@ -35,8 +37,18 @@ namespace PatentsHelperCases
             using (var fs = ExcelApp.ReadStream(FullPath, ExcelFileTypes.Cases))
             {
                 var wb = new ExcelWorkbook(fs);
-                var cases = wb.GetDataTable(TableName);
+                var cases = wb.GetDataTable();
                 return new ExcelCases(cases);
+            }
+        }
+
+        public static List<Field> GetFields()
+        {
+            using (var fs = ExcelApp.ReadStream(FullPath, ExcelFileTypes.Cases))
+            {
+                var wb = new ExcelWorkbook(fs);
+                var emailFields = new UserSettings().CasesEmailsColumns?.Split(',');
+                return wb.GetFields(emailFields);
             }
         }
 
@@ -47,7 +59,7 @@ namespace PatentsHelperCases
                 using (var fs = ExcelApp.WriteStream(FullPath, ExcelFileTypes.Cases))
                 {
                     var wb = new ExcelWorkbook(fs);
-                    wb.AddRow(TableName, row);
+                    wb.AddRow(row);
                 }
             }
             catch
@@ -63,7 +75,7 @@ namespace PatentsHelperCases
                 using (var fs = ExcelApp.WriteStream(FullPath, ExcelFileTypes.Cases))
                 {
                     var wb = new ExcelWorkbook(fs);
-                    wb.AddRow(TableName, row);
+                    wb.AddRow(row);
                 }
 
                 ExcelApp.RestoreWorkbookAccess(openWb);

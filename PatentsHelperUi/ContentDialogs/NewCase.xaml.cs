@@ -1,6 +1,6 @@
-﻿using ClosedXML.Excel;
-using ModernWpf.Controls;
+﻿using ModernWpf.Controls;
 using PatentsHelperCases;
+using PatentsHelperExcel;
 using PatentsHelperSettings;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -57,25 +57,9 @@ namespace PatentsHelperUi.ContentDialogs
             CasesManager.AddCaseToExcel(Fields.ConvertAll(f => f.Data).ToArray());
         }
 
-        private List<Field> fields;
-
-        public List<Field> Fields
-        {
-            get
-            {
-                if (fields == null)
-                {
-                    var emailFields = new UserSettings().CasesEmailsColumns?.Split(',');
-                    fields = CasesDataTable.Columns.Cast<DataColumn>().ToList().ConvertAll(d => new Field
-                    {
-                        Name = d.ColumnName,
-                        Type = TypesHelper.GetFieldType(d, CasesDataTable.ColumnDataTypes[d], emailFields)
-                    });
-                }
-
-                return fields;
-            }
-        }
+   
+        public List<Field> Fields { get; set; } = CasesManager.GetFields();
+       
 
 
 
@@ -83,6 +67,6 @@ namespace PatentsHelperUi.ContentDialogs
 
         public ExcelCases ExcelCases { get; set; } = CasesManager.GetCasesDataTable();
 
-        public ExcelDataTable CasesDataTable => ExcelCases.CasesTable;
+        public DataTable CasesDataTable => ExcelCases.CasesTable;
     }
 }

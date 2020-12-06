@@ -66,7 +66,22 @@
             </Grid.RowDefinitions>
 
             <ui:CommandBar VerticalContentAlignment="Center" Height="40" >
-                <ui:AppBarButton Icon="Add" Label="New Case" Command="{Binding NewCaseCommand}"/>
+                <ui:AppBarButton Icon="Filter" Label="Filter" >
+                    <ui:AppBarButton.Flyout>
+                        <ui:Flyout Placement="Bottom" >
+                            <ItemsControl ItemsSource="{Binding ColumnsVisiblity}" >
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}" />
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </ui:Flyout>
+                    </ui:AppBarButton.Flyout>
+
+
+                </ui:AppBarButton>
+                <ui:AppBarButton Icon="Add" Label="New Case" Command="{Binding NewCaseCommand}" />
                 <ui:AppBarButton Icon="OpenWith" Label="Open with Excel" Command="{Binding OpenCasesInExcelCommand}" />
                 <ui:CommandBar.Content>
                     <StackPanel Orientation="Horizontal" >
@@ -75,9 +90,9 @@
                                 <ui:SymbolIcon Symbol="Refresh" />
                             </Button.Content>
                         </Button>
-                        <ui:AutoSuggestBox VerticalAlignment="Center" Text="{Binding Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="250" Margin="10,0,0,0" QueryIcon="Filter" PlaceholderText="Filter"/>
+                        <ui:AutoSuggestBox VerticalAlignment="Center" Text="{Binding Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="250" Margin="10,0,0,0" QueryIcon="Find" PlaceholderText="Find"/>
                         <ui:AppBarSeparator />
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" VerticalAlignment="Center" >
                             <ui:SymbolIcon Symbol="Sort"  />
                             <Label Content="Sort" HorizontalAlignment="Center" VerticalAlignment="Center"  Margin="10,0,0,0" />
                             <ComboBox
@@ -86,144 +101,117 @@
                        DisplayMemberPath="Description"
                        SelectedValue="{Binding Path=SortOptions}" 
                        Margin="10,0,0,0" 
-                       Width="180" />
+                       Width="130" />
                         </StackPanel>
                     </StackPanel>
                 </ui:CommandBar.Content>
             </ui:CommandBar>
-            <DataGrid ui:DataGridHelper.UseModernColumnStyles="True" Grid.Row="1" ItemsSource="{Binding CasesList}" SelectedItem="{Binding SelectedCase}" AutoGenerateColumns="False" IsReadOnly="True" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Standard" SelectionMode="Single" SelectionUnit="FullRow" GridLinesVisibility="Horizontal" HeadersVisibility="Column" Grid.RowSpan="2"  >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding [0]}" Visibility="{Binding DataContext.CasesDataTable.Columns[0].ColumnName, Converter={StaticResource NullToVisibilityConverter}, FallbackValue=Collapsed, Source={x:Reference data}, TargetNullValue=Collapsed}" >
-                        <DataGridTextColumn.Header>
-                            <TextBlock Text="{Binding DataContext.CasesDataTable.Columns[0].ColumnName, Source={x:Reference data}}" />
-                        </DataGridTextColumn.Header>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn  Binding="{Binding [1]}" Visibility="{Binding DataContext.CasesDataTable.Columns[1].ColumnName, Converter={StaticResource NullToVisibilityConverter}, FallbackValue=Collapsed, Source={x:Reference data}, TargetNullValue=Collapsed}">
-                        <DataGridTextColumn.Header>
-                            <TextBlock Text="{Binding DataContext.CasesDataTable.Columns[1].ColumnName, Source={x:Reference data}}" />
-                        </DataGridTextColumn.Header>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn  Binding="{Binding [2]}" Visibility="{Binding DataContext.CasesDataTable.Columns[2].ColumnName, Converter={StaticResource NullToVisibilityConverter}, FallbackValue=Collapsed, Source={x:Reference data}, TargetNullValue=Collapsed}">
-                        <DataGridTextColumn.Header>
-                            <TextBlock Text="{Binding DataContext.CasesDataTable.Columns[2].ColumnName, Source={x:Reference data}}" />
-                        </DataGridTextColumn.Header>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Binding="{Binding [3]}" Visibility="{Binding DataContext.CasesDataTable.Columns[3].ColumnName, Converter={StaticResource NullToVisibilityConverter}, FallbackValue=Collapsed, Source={x:Reference data}, TargetNullValue=Collapsed}" >
-                        <DataGridTextColumn.Header>
-                            <TextBlock Text="{Binding DataContext.CasesDataTable.Columns[3].ColumnName, Source={x:Reference data}}" />
-                        </DataGridTextColumn.Header>
-                    </DataGridTextColumn>
-                    <DataGridTextColumn Binding="{Binding [4]}" Visibility="{Binding DataContext.CasesDataTable.Columns[4].ColumnName, Converter={StaticResource NullToVisibilityConverter}, FallbackValue=Collapsed, Source={x:Reference data}, TargetNullValue=Collapsed}" >
-                        <DataGridTextColumn.Header>
-                            <TextBlock Text="{Binding DataContext.CasesDataTable.Columns[4].ColumnName, Source={x:Reference data}}" />
-                        </DataGridTextColumn.Header>
-                    </DataGridTextColumn>
-                </DataGrid.Columns>
+            <DataGrid FrozenColumnCount="1" ui:DataGridHelper.UseModernColumnStyles="True" Grid.Row="1" ItemsSource="{Binding CasesList}" SelectedItem="{Binding SelectedCaseRowView}" AutoGenerateColumns="True" IsReadOnly="True" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Standard" SelectionMode="Single" SelectionUnit="FullRow" GridLinesVisibility="Horizontal" HeadersVisibility="Column" Grid.RowSpan="2"  >
+               
             </DataGrid>
         </Grid>
 
         <GridSplitter Grid.Column="1" Width="5"  HorizontalAlignment="Stretch" Margin="5,10,0,10" Background="Transparent"/>
-        <Grid Grid.Column="2" Background="{StaticResource SystemControlPageBackgroundListLowBrush}" Margin="0,10,10,10" >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="180"/>
-                <RowDefinition Height="140" />
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Border Margin="10,10,10,0" BorderBrush="{StaticResource TextControlBorderBrush}" CornerRadius="3" BorderThickness="1" Grid.Row="0" >
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="32"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <DockPanel HorizontalAlignment="Stretch" >
-                        <TextBlock Text="Deadlines" Margin="10,0,0,0" VerticalAlignment="Center" />
-                        <Button HorizontalAlignment="Right" ToolTip="New Deadline" Width="40" Command="{Binding CreateNewDeadlineCommand}"  Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="Add" />
-                            </Button.Content>
-                        </Button>
+        <Grid Grid.Column="2" Margin="0,10,10,10">
 
-                    </DockPanel>
-                    <Border Grid.Row="1" VerticalAlignment="Top" BorderBrush="{StaticResource TextControlBorderBrush}" BorderThickness="0,0,0,1" />
-                    <Rectangle Grid.Row="1" Margin="0,1,0,0" Visibility="{Binding DeadlinesOverlayVisibilty}" Style="{StaticResource HatchOverlay}" />
-                    <ScrollViewer Grid.Row="1" Margin="0,1,0,0">
-                        <ui:ItemsRepeater  ItemsSource="{Binding Deadlines}" >
-                            <ui:ItemsRepeater.ItemTemplate>
-                                <DataTemplate>
-                                    <StackPanel Orientation="Vertical" Margin="5">
-                                        <TextBlock Foreground="{StaticResource SystemControlBackgroundAccentBrush}" Text="{Binding DeadlineDate, StringFormat=MM/dd/yyyy}" />
-                                        <TextBlock Text="{Binding Title}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ui:ItemsRepeater.ItemTemplate>
-                        </ui:ItemsRepeater>
-                    </ScrollViewer>
-                </Grid>
-            </Border>
-            <Border Margin="10,10,10,0" BorderBrush="{StaticResource TextControlBorderBrush}" CornerRadius="3" BorderThickness="1" Grid.Row="1" >
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="32"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="Outlook" Margin="10,0,0,0" VerticalAlignment="Center" />
-                    </StackPanel>
-                    <Border Grid.Row="1" VerticalAlignment="Top" BorderBrush="{StaticResource TextControlBorderBrush}" BorderThickness="0,0,0,1" />
+            <Grid Grid.Column="2" Background="{StaticResource SystemControlPageBackgroundListLowBrush}" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="180"/>
+                    <RowDefinition Height="140" />
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Margin="10,10,10,0" BorderBrush="{StaticResource TextControlBorderBrush}" CornerRadius="3" BorderThickness="1" Grid.Row="0"  >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <DockPanel HorizontalAlignment="Stretch" >
+                            <TextBlock Text="Deadlines" Margin="10,0,0,0" VerticalAlignment="Center" />
+                            <Button IsEnabled="{Binding NewDealinesButtonEnabled}"  HorizontalAlignment="Right" ToolTip="New Deadline" Width="40" Command="{Binding CreateNewDeadlineCommand}"  Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="Add" IsEnabled="{Binding NewDealinesButtonEnabled}" />
+                                </Button.Content>
+                            </Button>
 
-                    <Button  Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10" Command="{Binding CreateSearchFolderCommand}">
-                        <Button.Content>
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Add Search Folder" />
-                            </StackPanel>
-                        </Button.Content>
-                    </Button>
-
-                    <Grid Grid.Row="1" Margin="10" Height="32" VerticalAlignment="Bottom">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="263*"/>
-                            <ColumnDefinition Width="40"/>
-                        </Grid.ColumnDefinitions>
-                        <ComboBox HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedEmailTemplate}" ItemsSource="{Binding EmailTemplates}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Name}" />
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                        <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="New Email" Grid.Column="1" Command="{Binding NewEmailCommand}">
-                            <Button.Content>
-                                <ui:SymbolIcon Symbol="MailForward" />
-                            </Button.Content>
-                        </Button>
+                        </DockPanel>
+                        <Border Grid.Row="1" VerticalAlignment="Top" BorderBrush="{StaticResource TextControlBorderBrush}" BorderThickness="0,0,0,1" />
+                        <Rectangle Grid.Row="1" Margin="0,1,0,0" Visibility="{Binding DeadlinesOverlayVisibilty}" Style="{StaticResource HatchOverlay}" />
+                        <ScrollViewer Grid.Row="1" Margin="0,1,0,0">
+                            <ui:ItemsRepeater  ItemsSource="{Binding Deadlines}" >
+                                <ui:ItemsRepeater.ItemTemplate>
+                                    <DataTemplate>
+                                        <StackPanel Orientation="Vertical" Margin="5">
+                                            <TextBlock Foreground="{StaticResource SystemControlBackgroundAccentBrush}" Text="{Binding DeadlineDate, StringFormat=MM/dd/yyyy}" />
+                                            <TextBlock Text="{Binding Title}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ui:ItemsRepeater.ItemTemplate>
+                            </ui:ItemsRepeater>
+                        </ScrollViewer>
                     </Grid>
-                </Grid>
-            </Border>
-            <Border Margin="10" BorderBrush="{StaticResource TextControlBorderBrush}" CornerRadius="3" BorderThickness="1" Grid.Row="2">
-                <Grid >
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="32"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <DockPanel HorizontalAlignment="Stretch" >
-                        <TextBlock Text="File System" VerticalAlignment="Center" Margin="10,0,0,0" />
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                            <Button ToolTip="Open in File Explorer" Command="{Binding OpenCurrentCaseInFileExplorerCommand}" HorizontalAlignment="Right" Width="40"  Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
-                                <Button.Content>
-                                    <ui:SymbolIcon Symbol="MoveToFolder" />
-                                </Button.Content>
-                            </Button>
-                            <Button ToolTip="Link case to folder" Command="{Binding ChangeCaseLocationCommand}" HorizontalAlignment="Right" Width="40"  Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
-                                <Button.Content>
-                                    <ui:SymbolIcon Symbol="Attach" />
-                                </Button.Content>
-                            </Button>
+                </Border>
+                <Border Margin="10,10,10,0" BorderBrush="{StaticResource TextControlBorderBrush}" CornerRadius="3" BorderThickness="1" Grid.Row="1" >
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Outlook" Margin="10,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
-                    </DockPanel>
-                    <Border Grid.Row="1" VerticalAlignment="Top" BorderBrush="{StaticResource TextControlBorderBrush}" BorderThickness="0,0,0,1" />
-                    <UserControls:FolderTreeView Margin="0,1,0,0"  RootFolder="{Binding DataContext.RootFolder,Source={x:Reference data},UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Grid.Row="1"  />
-                </Grid>
-            </Border>
+                        <Border Grid.Row="1" VerticalAlignment="Top" BorderBrush="{StaticResource TextControlBorderBrush}" BorderThickness="0,0,0,1" />
+
+                        <Button Content="Add Search Folder" IsEnabled="{Binding OutlookActionsEnabled}" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Stretch" Margin="10" Command="{Binding CreateSearchFolderCommand}">
+
+                        </Button>
+
+                        <Grid Grid.Row="1" Margin="10" Height="32" VerticalAlignment="Bottom">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="263*"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+                            <ComboBox IsEnabled="{Binding OutlookActionsEnabled}" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedEmailTemplate}" ItemsSource="{Binding EmailTemplates}">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                            <Button IsEnabled="{Binding OutlookActionsEnabled}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="New Email" Grid.Column="1" Command="{Binding NewEmailCommand}">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="MailForward" />
+                                </Button.Content>
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Border>
+                <Border Margin="10" BorderBrush="{StaticResource TextControlBorderBrush}" CornerRadius="3" BorderThickness="1" Grid.Row="2">
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="32"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <DockPanel HorizontalAlignment="Stretch" >
+                            <TextBlock Text="File System" VerticalAlignment="Center" Margin="10,0,0,0" />
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                <Button IsEnabled="{Binding OpenCaseInFileExplorerEnabled}" ToolTip="Open in File Explorer" Command="{Binding OpenCurrentCaseInFileExplorerCommand}" HorizontalAlignment="Right" Width="40"  Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
+                                    <Button.Content>
+                                        <ui:SymbolIcon Symbol="MoveToFolder" />
+                                    </Button.Content>
+                                </Button>
+                                <Button IsEnabled="{Binding LinkCaseButtonEnabled}" ToolTip="Link case to folder" Command="{Binding ChangeCaseLocationCommand}" HorizontalAlignment="Right" Width="40"  Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
+                                    <Button.Content>
+                                        <ui:SymbolIcon Symbol="Attach" />
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                        </DockPanel>
+                        <Border Grid.Row="1" VerticalAlignment="Top" BorderBrush="{StaticResource TextControlBorderBrush}" BorderThickness="0,0,0,1" />
+                        <UserControls:FolderTreeView Margin="0,1,0,0"  RootFolder="{Binding DataContext.RootFolder,Source={x:Reference data},UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Grid.Row="1"  />
+                    </Grid>
+                </Border>
+            </Grid>
         </Grid>
     </Grid>
 </Page>

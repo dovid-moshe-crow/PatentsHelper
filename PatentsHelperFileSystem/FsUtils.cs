@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Windows.Forms;
 
 namespace PatentsHelperFileSystem
 {
@@ -7,8 +8,7 @@ namespace PatentsHelperFileSystem
         public static string PickFolder(string startingPath = null)
         {
             var dialog = new Ookii.Dialogs.Wpf.VistaFolderBrowserDialog();
-
-
+         
             if (!string.IsNullOrEmpty(startingPath))
             {
                 dialog.SelectedPath = startingPath;

@@ -1,5 +1,6 @@
 ﻿using ModernWpf;
 using ModernWpf.Controls;
+using System;
 using System.Windows;
 namespace PatentsHelperUi
 {
@@ -13,6 +14,7 @@ namespace PatentsHelperUi
 
         public App()
         {
+            
             InitializeComponent();
         }
     }

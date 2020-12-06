@@ -1,16 +1,16 @@
-﻿using ClosedXML.Excel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.Linq;
 
 namespace PatentsHelperDeadlines
 {
     public partial class ExcelDeadlines
     {
-        public ExcelDataTable DeadlinesTable { get; set; }
+        public DataTable DeadlinesTable { get; set; }
 
-        public ExcelDeadlines(ExcelDataTable excelDataTable)
+        public ExcelDeadlines(DataTable excelDataTable)
         {
             DeadlinesTable = excelDataTable;
         }
@@ -34,9 +34,15 @@ namespace PatentsHelperDeadlines
                 .DefaultIfEmpty()?.Where(d => d?[0]?.ToString()?.Trim()?.Equals(caseId, StringComparison.OrdinalIgnoreCase) == true)
                 .DefaultIfEmpty()?.ToList().ConvertAll(d =>
                 {
-                    if (DateTime.TryParse(d?["Deadline"]?.ToString(), out DateTime deadlineDate))
+                    var deadline = d?["Deadline"];
+                    var title = d?["Title"];
+                    if (deadline != null && title != null)
                     {
-                        return new Deadline { Title = d?["Title"]?.ToString(), DeadlineDate = deadlineDate };
+                        return new Deadline
+                        {
+                            Title = title.ToString(),
+                            DeadlineDate = deadline.ToString()
+                        };
                     }
                     else
                     {

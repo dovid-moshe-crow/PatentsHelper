@@ -2,14 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Json;
+using Utf8Json;
 
 namespace PatentsHelperSettings
 {
     public class CasesData : IList<CaseData>
     {
         private static readonly string casesDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "PatentsHelper");
-        private static readonly string oldCasesDataPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "sadifhihfiasdjgoieuhpiuhvkljf", "Cases.json");
         private static readonly string casesDataFilePath = Path.Combine(casesDataPath, "CasesData.json");
         public CasesData()
         {
@@ -22,18 +21,7 @@ namespace PatentsHelperSettings
             }
             catch
             {
-                try
-                {
-                    using (FileStream fs = File.OpenRead(oldCasesDataPath))
-                    {
-                        var oldData = JsonSerializer.DeserializeAsync<List<Dictionary<string, string>>>(fs).Result;
-                        casesData = oldData.ConvertAll(d => new CaseData { DateCreated = DateTime.MinValue, LastTimeAccessed = DateTime.Now, Location = d["path"], Name = d["docketNumber"] });
-                    }
-                }
-                catch
-                {
-                    casesData = new List<CaseData>();
-                }
+                casesData = new List<CaseData>();
             }
         }
 

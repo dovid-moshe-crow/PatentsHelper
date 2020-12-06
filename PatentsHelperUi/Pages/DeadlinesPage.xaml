@@ -36,11 +36,33 @@
         </ResourceDictionary>
     </Page.Resources>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="328"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="40" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <ui:CommandBar VerticalContentAlignment="Center">
+        <FrameworkElement x:Name="data" Visibility="Collapsed" Grid.ColumnSpan="2"/>
+        <ui:CommandBar VerticalContentAlignment="Center" >
+            <ui:AppBarButton Icon="Filter" Label="Filter" >
+                <ui:AppBarButton.Flyout>
+                    <ui:Flyout Placement="Bottom" >
+                        <ItemsControl ItemsSource="{Binding ColumnsVisiblity}" >
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <CheckBox Content="{Binding Name}" IsChecked="{Binding IsChecked}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </ui:Flyout>
+                </ui:AppBarButton.Flyout>
+
+
+            </ui:AppBarButton>
+
             <ui:AppBarButton Icon="OpenWith" Label="Open with Excel" Command="{Binding OpenInExcelCommand}" />
             <ui:CommandBar.Content>
                 <StackPanel Orientation="Horizontal">
@@ -49,10 +71,76 @@
                             <ui:SymbolIcon Symbol="Refresh" />
                         </Button.Content>
                     </Button>
-                    <ui:AutoSuggestBox VerticalAlignment="Center" Margin="10,0,0,0" Width="250" QueryIcon="Find" PlaceholderText="Filter" Text="{Binding Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <ui:AutoSuggestBox VerticalAlignment="Center" Margin="10,0,0,0" Width="250" QueryIcon="Find" PlaceholderText="Find" Text="{Binding Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                 </StackPanel>
             </ui:CommandBar.Content>
-        </ui:CommandBar>
-        <DataGrid ui:DataGridHelper.UseModernColumnStyles="True" Grid.Row="1" IsReadOnly="True" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Standard" AutoGenerateColumns="True" GridLinesVisibility="Horizontal" HeadersVisibility="Column" ItemsSource="{Binding DeadlinesList}" SelectionUnit="FullRow" SelectionMode="Single" CanUserAddRows="False"  />
+        </ui:CommandBar> 
+        <DataGrid FrozenColumnCount="1" SelectedItem="{Binding SelectedDeadline}" ui:DataGridHelper.UseModernColumnStyles="True" Grid.Row="1" IsReadOnly="True" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Standard" AutoGenerateColumns="True" GridLinesVisibility="Horizontal" HeadersVisibility="Column" ItemsSource="{Binding DeadlinesList}" SelectionUnit="FullRow" SelectionMode="Single" CanUserAddRows="False" />
+        <GridSplitter Grid.Column="1" Width="5" Margin="5,10,0,10" HorizontalAlignment="Stretch" Grid.RowSpan="2" Background="Transparent"/>
+
+        <Grid  Grid.Column="2" Grid.RowSpan="2" Background="{StaticResource SystemControlPageBackgroundListLowBrush}" Margin="0,0,10,10" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Border Margin="10,10,10,0" BorderBrush="{StaticResource TextControlBorderBrush}" CornerRadius="3" BorderThickness="1" Grid.Row="0"  >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Text="Outlook" VerticalAlignment="Center" Margin="10,0,0,0" />
+                    <Border Grid.Row="1" VerticalAlignment="Top" BorderBrush="{StaticResource TextControlBorderBrush}" BorderThickness="0,0,0,1" />
+
+                    <Grid Grid.Row="1" Margin="10" Height="32" VerticalAlignment="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="263*"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox IsEnabled="{Binding OutlookActionsEnabled}" HorizontalAlignment="Stretch" SelectedItem="{Binding SelectedEmailTemplate}" ItemsSource="{Binding EmailTemplates}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button IsEnabled="{Binding OutlookActionsEnabled}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTip="New Email" Grid.Column="1" Command="{Binding NewEmailCommand}">
+                            <Button.Content>
+                                <ui:SymbolIcon Symbol="MailForward" />
+                            </Button.Content>
+                        </Button>
+                    </Grid>
+                </Grid>
+
+
+
+            </Border>
+
+            <Border Margin="10" BorderBrush="{StaticResource TextControlBorderBrush}" CornerRadius="3" BorderThickness="1" Grid.Row="1"  >
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="32"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel HorizontalAlignment="Stretch" >
+                        <TextBlock Text="File System" VerticalAlignment="Center" Margin="10,0,0,0" />
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button IsEnabled="{Binding OpenCaseInFileExplorerEnabled}" ToolTip="Open in File Explorer" Command="{Binding OpenCurrentCaseInFileExplorerCommand}" HorizontalAlignment="Right" Width="40"  Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="MoveToFolder" />
+                                </Button.Content>
+                            </Button>
+                            <Button IsEnabled="{Binding LinkCaseButtonEnabled}" ToolTip="Link case to folder" Command="{Binding ChangeCaseLocationCommand}" HorizontalAlignment="Right" Width="40"  Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
+                                <Button.Content>
+                                    <ui:SymbolIcon Symbol="Attach" />
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                    </DockPanel>
+                    <Border Grid.Row="1" VerticalAlignment="Top" BorderBrush="{StaticResource TextControlBorderBrush}" BorderThickness="0,0,0,1" />
+                    <UserControls:FolderTreeView Margin="0,1,0,0"  RootFolder="{Binding DataContext.RootFolder,Source={x:Reference data},UpdateSourceTrigger=PropertyChanged,NotifyOnSourceUpdated=True,NotifyOnTargetUpdated=True}" Grid.Row="1"  />
+                </Grid>
+            </Border>
+        </Grid>
     </Grid>
 </Page>

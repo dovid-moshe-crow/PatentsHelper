@@ -1,5 +1,6 @@
 ﻿using PatentsHelperFileSystem;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace PatentsHelperSettings
 
     public class UserSettings : INotifyPropertyChanged
     {
+
       
         public int ReferenceNumeralIncrement
         {
@@ -32,37 +34,6 @@ namespace PatentsHelperSettings
                 OnPropertyChanged(nameof(CasesRootFolder));
             }
         });
-
-        public List<string> DateFormats
-        {
-            get
-            {
-                List<string> dateFormats = new List<string>();
-
-                foreach (var region in CultureInfo.GetCultures(CultureTypes.SpecificCultures).ToList())
-                {
-                    CultureInfo dateFormat = new CultureInfo(region.Name);
-                    if (!dateFormats.Contains(dateFormat.DateTimeFormat.ShortDatePattern))
-                    {
-                        dateFormats.Add(dateFormat.DateTimeFormat.ShortDatePattern);
-                    }
-                }
-
-                return dateFormats;
-            }
-        }
-
-
-        public string DateFormat
-        {
-            get => Properties.Settings.Default.DateFormat;
-            set
-            {
-                Properties.Settings.Default.DateFormat = value;
-                OnPropertyChanged(nameof(DateFormat));
-            }
-        }
-
 
         public string SearchFolderScope
         {
@@ -136,6 +107,30 @@ namespace PatentsHelperSettings
                 Properties.Settings.Default.AppTheme = value;
                 OnPropertyChanged(nameof(AppTheme));
             }
+        }
+
+        public StringCollection CasesColumnsToShow
+        {
+            get => Properties.Settings.Default.CasesColumnsToShow;
+            set
+            {
+                Properties.Settings.Default.CasesColumnsToShow = value;
+            }
+        }
+
+
+        public StringCollection DeadlinesColumnsToShow
+        {
+            get => Properties.Settings.Default.DeadlinesColumnsToShow;
+            set
+            {
+                Properties.Settings.Default.DeadlinesColumnsToShow = value;
+            }
+        }
+
+        public void Save()
+        {
+            Properties.Settings.Default.Save();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -28,13 +28,13 @@ namespace PatentsHelperRn
             {
                 var wb = new ExcelWorkbook(fs);
 
-                var columns = wb.GetColumns(rnOptions.SheetName, 1, 2);
+                var columns = wb.GetColumns(1, 2);
                 var numbers = columns[0];
                 var values = columns[1];
 
                 var rns = new ReferenceNumerals();
 
-                if (int.TryParse(wb.GetCell(rnOptions.SheetName, 2, 3)?.ToString(), out int increment))
+                if (int.TryParse(wb.GetCell(2, 3)?.ToString(), out int increment))
                 {
                     rns.Increment = increment;
                 }
@@ -68,8 +68,7 @@ namespace PatentsHelperRn
                 using (var fs = ExcelApp.WriteStream(fullPath, ExcelFileTypes.Rn))
                 {
                     var wb = new ExcelWorkbook(fs);
-                    wb.AddRow(rnOptions.SheetName, new List<object> { number, value });
-                    wb.AdjustColumns(rnOptions.SheetName);
+                    wb.AddRow(new object[]{ number, value });
                 }
             }
             catch
@@ -85,8 +84,7 @@ namespace PatentsHelperRn
                 using (var fs = ExcelApp.WriteStream(fullPath, ExcelFileTypes.Rn))
                 {
                     var wb = new ExcelWorkbook(fs);
-                    wb.AddRow(rnOptions.SheetName, new List<object> { number, value });
-                    wb.AdjustColumns(rnOptions.SheetName);
+                    wb.AddRow(new object[]{ number, value });
                 }
 
                 ExcelApp.RestoreWorkbookAccess(openWb);
@@ -104,7 +102,7 @@ namespace PatentsHelperRn
             {
                 var wb = new ExcelWorkbook(fs);
                 rnOptions.RnIncrement = new UserSettings().ReferenceNumeralIncrement;
-                wb.SetCell(rnOptions.SheetName, rnOptions.RnIncrement, 2, 3);
+                wb.SetCell(rnOptions.RnIncrement, 2, 3);
             }
         }
 

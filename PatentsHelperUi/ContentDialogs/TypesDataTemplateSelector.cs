@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using PatentsHelperExcel;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace PatentsHelperUi.ContentDialogs

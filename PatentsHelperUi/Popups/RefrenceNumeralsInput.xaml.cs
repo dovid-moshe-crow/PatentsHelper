@@ -82,10 +82,7 @@ namespace PatentsHelperUi.Popups
 
         public Visibility LoadingOverlayVisibility { get; set; } = Visibility.Hidden;
 
-        public bool RnExists
-        {
-            get => ReferenceNumerals.ReferenceNumeralExists(RnNumber);
-        }
+        public bool RnExists => ReferenceNumerals.ReferenceNumeralExists(RnNumber);
 
         public Visibility RnErrorVisiblity
         {

@@ -53,7 +53,7 @@ namespace PatentsHelperOutlook
             MailItem mail = app.CreateItemFromTemplate(path);
             mail.To = ParseTemplateString(mail.To, data);
             mail.CC = ParseTemplateString(mail.CC, data);
-            mail.HTMLBody = ParseTemplateString(mail.HTMLBody, data);
+            mail.Body = ParseTemplateString(mail.Body, data);
             mail.Subject = ParseTemplateString(mail.Subject, data);
             mail.BCC = ParseTemplateString(mail.BCC, data);
             mail.Display(mail);

@@ -1,5 +1,6 @@
 ﻿using PatentsHelperExcel;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 
@@ -36,18 +37,19 @@ namespace PatentsHelperDeadlines
             using (var fs = ExcelApp.ReadStream(FullPath, ExcelFileTypes.Deadlines))
             {
                 var wb = new ExcelWorkbook(fs);
-                var deadlines = wb.GetDataTable(TableName);
+                var deadlines = wb.GetDataTable();
                 return new ExcelDeadlines(deadlines);
             }
         }
 
-        public class Deadline
+        public static List<Field> GetFields()
         {
-            public object CaseId { get; set; }
-            public DateTime DeadlineDate { get; set; }
-            public string Title { get; set; }
+            using (var fs = ExcelApp.ReadStream(FullPath, ExcelFileTypes.Deadlines))
+            {
+                var wb = new ExcelWorkbook(fs);
+                return wb.GetFields();
+            }
         }
-
         public static void AddDeadlineToExcel(object[] row)
         {
             try
@@ -55,7 +57,7 @@ namespace PatentsHelperDeadlines
                 using (var fs = ExcelApp.WriteStream(FullPath, ExcelFileTypes.Deadlines))
                 {
                     var wb = new ExcelWorkbook(fs);
-                    wb.AddRow(TableName, row);
+                    wb.AddRow(row);
                 }
             }
             catch
@@ -71,7 +73,7 @@ namespace PatentsHelperDeadlines
                 using (var fs = ExcelApp.WriteStream(FullPath, ExcelFileTypes.Deadlines))
                 {
                     var wb = new ExcelWorkbook(fs);
-                    wb.AddRow(TableName, row);
+                    wb.AddRow(row);
                 }
 
                 ExcelApp.RestoreWorkbookAccess(openWb);

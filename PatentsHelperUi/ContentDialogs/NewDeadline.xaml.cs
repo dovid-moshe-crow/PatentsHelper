@@ -1,6 +1,6 @@
-﻿using ClosedXML.Excel;
-using ModernWpf.Controls;
+﻿using ModernWpf.Controls;
 using PatentsHelperDeadlines;
+using PatentsHelperExcel;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -17,7 +17,7 @@ namespace PatentsHelperUi.ContentDialogs
         public NewDeadline([Optional] object caseId)
         {
             InitializeComponent();
-            NewDeadlineVM = new NewDeadlineVM { CaseId = caseId };
+            NewDeadlineVM = new NewDeadlineVM(caseId);
             DataContext = NewDeadlineVM;
         }
 
@@ -38,40 +38,16 @@ namespace PatentsHelperUi.ContentDialogs
             DeadlinesManager.AddDeadlineToExcel(Fields.ConvertAll(f => f.Data).ToArray());
         }
 
-        public object CaseId { get; set; }
-
-        private List<Field> fields;
-
-        public List<Field> Fields
+        public NewDeadlineVM(object caseId)
         {
-            get
-            {
-                if (fields == null)
-                {
-                    fields = DeadlinesDataTable.Columns.Cast<DataColumn>().ToList().ConvertAll(x => new Field { Name = x.ColumnName, Type = TypesHelper.GetFieldType(x, DeadlinesDataTable.ColumnDataTypes[x]) });
-                    var firstField = fields.ElementAtOrDefault(0);
-                    if (firstField.Type == Types.Text)
-                    {
-                        firstField.Text = CaseId?.ToString();
-                    }
-                    else if (firstField.Type == Types.Number)
-                    {
-                        if (double.TryParse(CaseId?.ToString(), out double caseId))
-                        {
-                            firstField.Number = caseId;
-                        }
-                    }
-                }
-
-                return fields;
-            }
+            var fields = DeadlinesManager.GetFields();
+            var firstField = fields.FirstOrDefault();
+            firstField.Data = caseId;
+            Fields = fields;
         }
+      
 
-        public DataRow DataRow => DeadlinesDataTable?.NewRow();
-
-        public ExcelDeadlines ExcelDeadlines { get; set; } = DeadlinesManager.GetDeadlinesDataTable();
-
-        public ExcelDataTable DeadlinesDataTable => ExcelDeadlines.DeadlinesTable;
+        public List<Field> Fields { get; }
 
     }
 }

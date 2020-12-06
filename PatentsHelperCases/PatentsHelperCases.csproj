@@ -12,6 +12,8 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -49,14 +51,20 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ClosedXML\ClosedXML.csproj">
-      <Project>{5d02cea0-7df5-403d-86f5-66862c4cc45f}</Project>
-      <Name>ClosedXML</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PatentsHelperExcel\PatentsHelperExcel.csproj">
       <Project>{dafde0bf-b1e2-424d-85a7-096404021d5c}</Project>
       <Name>PatentsHelperExcel</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PatentsHelperSettings\PatentsHelperSettings.csproj">
+      <Project>{3f7ed9be-263b-4639-b4bc-aa9f08024778}</Project>
+      <Name>PatentsHelperSettings</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="FodyWeavers.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

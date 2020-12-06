@@ -1,5 +1,4 @@
-﻿using ClosedXML.Excel;
-using FuzzySharp;
+﻿using FuzzySharp;
 using PatentsHelperCases;
 using PatentsHelperDeadlines;
 using PatentsHelperFileSystem;
@@ -8,8 +7,10 @@ using PatentsHelperSettings;
 using PatentsHelperUi.ContentDialogs;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
@@ -35,10 +36,24 @@ namespace PatentsHelperUi.Pages
             {
                 Dispatcher.Invoke(() =>
                 {
-                    DataContext = c.Result;
+                    if (c.IsFaulted)
+                    {
+                        MessageBox.Show(c.Exception?.ToString());
+                        return;
+                    }
+                    try
+                    {
+                        DataContext = c.Result;
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.ToString());
+                    }
                 });
             });
         }
+
+        
     }
 
     public enum SortOptions
@@ -51,7 +66,7 @@ namespace PatentsHelperUi.Pages
 
 
 
-    public class CasesVM : INotifyPropertyChanged
+    public partial class CasesVM : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -100,6 +115,9 @@ namespace PatentsHelperUi.Pages
 
         public void Refresh()
         {
+            filterdCasesDataTable = null;
+            EmailTemplates = OutlookManager.EmailTemplates;
+            SelectedEmailTemplate = EmailTemplates?.FirstOrDefault();
             ExcelCases = CasesManager.GetCasesDataTable();
             RefreshDeadlines();
         }
@@ -114,14 +132,14 @@ namespace PatentsHelperUi.Pages
 
         public ICommand ChangeCaseLocationCommand { get; set; }
 
-     
+
 
         public ICommand CreateNewDeadlineCommand => new RelayCommand<object>(() =>
         {
             var caseName = SelectedCase?[0];
             if (!string.IsNullOrWhiteSpace(caseName?.ToString()))
             {
-                new NewDeadline(caseName).ShowAsync().ContinueWith(res => 
+                new NewDeadline(caseName).ShowAsync().ContinueWith(res =>
                 {
                     Window.Dispatcher.Invoke(() =>
                     {
@@ -165,6 +183,7 @@ namespace PatentsHelperUi.Pages
             }
         });
 
+
         public List<EmailTemplate> EmailTemplates { get; set; }
 
         public EmailTemplate SelectedEmailTemplate { get; set; }
@@ -192,7 +211,8 @@ namespace PatentsHelperUi.Pages
             ChangeCaseLocation(caseName);
         }
 
-        public DataRow SelectedCase { get; set; }
+        public DataRowView SelectedCaseRowView { get; set; }
+        public DataRow SelectedCase => CasesDataTable.Rows.Cast<DataRow>().Where(r => r?[0] == SelectedCaseRowView?[0]).FirstOrDefault();
 
         public string RootFolder => CasesData.GetCaseByName(SelectedCase?[0]?.ToString())?.Location;
 
@@ -204,14 +224,28 @@ namespace PatentsHelperUi.Pages
 
         public ExcelCases ExcelCases { get; set; }
 
-        public ExcelDataTable CasesDataTable => ExcelCases.CasesTable;
+        public DataTable CasesDataTable => ExcelCases.CasesTable;
 
-        public IEnumerable<DataRow> CasesList
+
+        private DataTable filterdCasesDataTable;
+
+
+        public DataView CasesList
         {
             get
             {
-                var filteredRows = CasesDataTable?.AsEnumerable().DefaultIfEmpty()
-                    ?.Where(dr => dr.ItemArray.Any(s => string.IsNullOrEmpty(Filter) || Fuzz.PartialRatio(s.ToString()?.ToLower() ?? string.Empty, Filter?.ToLower()) > 90));
+
+                if (CasesDataTable == null) return null;
+
+                if (filterdCasesDataTable == null)
+                {
+                    var casesColumnsToShow = UserSettings.CasesColumnsToShow;
+                    string[] headers = CasesDataTable.Columns.Cast<DataColumn>().Select(c => c.ColumnName).Where((c, i) => casesColumnsToShow.Contains(c) || i == 0).ToArray();
+                    filterdCasesDataTable = CasesDataTable.DefaultView.ToTable(false, headers);
+                }
+
+                var filteredRows = filterdCasesDataTable?.AsEnumerable().DefaultIfEmpty()
+                   ?.Where(dr => dr.ItemArray.Any(s => string.IsNullOrEmpty(Filter) || Fuzz.PartialRatio(s.ToString()?.ToLower() ?? string.Empty, Filter?.ToLower()) > 90));
 
                 switch (SortOptions)
                 {
@@ -229,7 +263,15 @@ namespace PatentsHelperUi.Pages
                         break;
                 }
 
-                return filteredRows;
+
+                if (filteredRows?.Any() == true)
+                {
+                    return filteredRows.CopyToDataTable()?.AsDataView();
+                }
+                else
+                {
+                    return null;
+                }
             }
         }
 
@@ -245,8 +287,55 @@ namespace PatentsHelperUi.Pages
 
         public List<Deadline> Deadlines => ExcelDeadlines.Deadlines(SelectedCase?[0]?.ToString());
 
+        public bool NewDealinesButtonEnabled => SelectedCase != null;
+
         public Visibility DeadlinesOverlayVisibilty => Deadlines?.Any() == true ? Visibility.Collapsed : Visibility.Visible;
 
-      
+        public bool OutlookActionsEnabled => SelectedCase != null;
+        public bool LinkCaseButtonEnabled => SelectedCase != null;
+        public bool OpenCaseInFileExplorerEnabled => SelectedCase != null && Directory.Exists(RootFolder);
+
+        public List<ColumnVisiblity> ColumnsVisiblity => CasesDataTable.Columns.Cast<DataColumn>().Skip(1).ToList()
+            .ConvertAll(c => new ColumnVisiblity
+            {
+                Name = c.ColumnName,
+                UserSettings = UserSettings,
+            });
+
+
+        public class ColumnVisiblity : INotifyPropertyChanging
+        {
+            public string Name { get; set; }
+            public UserSettings UserSettings { get; set; }
+            public bool IsChecked
+            {
+                get
+                {
+                    return UserSettings.CasesColumnsToShow.Contains(Name);
+                }
+                set
+                {
+                    if (value == true)
+                    {
+                        if (!UserSettings.CasesColumnsToShow.Contains(Name))
+                        {
+                            UserSettings.CasesColumnsToShow.Add(Name);
+                            UserSettings.Save();
+                        }
+                    }
+                    else
+                    {
+                        UserSettings.CasesColumnsToShow.Remove(Name);
+                        UserSettings.Save();
+                    }
+                }
+            }
+
+
+            public event PropertyChangingEventHandler PropertyChanging;
+        }
+
+        public static UserSettings UserSettings { get; } = new UserSettings();
+
     }
 }
