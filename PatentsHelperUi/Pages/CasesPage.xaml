@@ -106,7 +106,7 @@
                     </StackPanel>
                 </ui:CommandBar.Content>
             </ui:CommandBar>
-            <DataGrid FrozenColumnCount="1" ui:DataGridHelper.UseModernColumnStyles="True" Grid.Row="1" ItemsSource="{Binding CasesList}" SelectedItem="{Binding SelectedCaseRowView}" AutoGenerateColumns="True" IsReadOnly="True" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Standard" SelectionMode="Single" SelectionUnit="FullRow" GridLinesVisibility="Horizontal" HeadersVisibility="Column" Grid.RowSpan="2"  >
+            <DataGrid AlternatingRowBackground="{StaticResource SystemControlBackgroundAccentBrush}" FrozenColumnCount="1" ui:DataGridHelper.UseModernColumnStyles="True" Grid.Row="1" ItemsSource="{Binding CasesList}" SelectedItem="{Binding SelectedCaseRowView}" AutoGenerateColumns="True" IsReadOnly="True" VirtualizingPanel.ScrollUnit="Pixel" VirtualizingPanel.VirtualizationMode="Standard" SelectionMode="Single" SelectionUnit="FullRow" GridLinesVisibility="Horizontal" HeadersVisibility="Column" Grid.RowSpan="2"  >
                
             </DataGrid>
         </Grid>

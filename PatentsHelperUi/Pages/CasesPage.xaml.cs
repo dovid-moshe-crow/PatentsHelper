@@ -53,7 +53,7 @@ namespace PatentsHelperUi.Pages
             });
         }
 
-        
+
     }
 
     public enum SortOptions
@@ -139,13 +139,19 @@ namespace PatentsHelperUi.Pages
             var caseName = SelectedCase?[0];
             if (!string.IsNullOrWhiteSpace(caseName?.ToString()))
             {
-                new NewDeadline(caseName).ShowAsync().ContinueWith(res =>
+                object title = null;
+                if (SelectedCase.Table.Columns.Contains("Title"))
                 {
-                    Window.Dispatcher.Invoke(() =>
-                    {
-                        RefreshDeadlines();
-                    });
-                });
+                    title = SelectedCase?["Title"];
+                }
+
+                new NewDeadline(caseName, title).ShowAsync().ContinueWith(res =>
+                 {
+                     Window.Dispatcher.Invoke(() =>
+                     {
+                         RefreshDeadlines();
+                     });
+                 });
                 CasesData.LastTimeUsedCase(caseName?.ToString());
             }
         });

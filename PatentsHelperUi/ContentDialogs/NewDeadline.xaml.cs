@@ -14,10 +14,10 @@ namespace PatentsHelperUi.ContentDialogs
     /// </summary>
     public partial class NewDeadline : ContentDialog
     {
-        public NewDeadline([Optional] object caseId)
+        public NewDeadline([Optional] object caseId, [Optional] object title)
         {
             InitializeComponent();
-            NewDeadlineVM = new NewDeadlineVM(caseId);
+            NewDeadlineVM = new NewDeadlineVM(caseId, title);
             DataContext = NewDeadlineVM;
         }
 
@@ -38,14 +38,20 @@ namespace PatentsHelperUi.ContentDialogs
             DeadlinesManager.AddDeadlineToExcel(Fields.ConvertAll(f => f.Data).ToArray());
         }
 
-        public NewDeadlineVM(object caseId)
+        public NewDeadlineVM(object caseId, object title)
         {
             var fields = DeadlinesManager.GetFields();
             var firstField = fields.FirstOrDefault();
             firstField.Data = caseId;
+
+            var titleField = fields.Where(f => f.Name.ToLower().Trim().Equals("title")).FirstOrDefault();
+            if (titleField != null)
+            {
+                titleField.Data = title;
+            }
             Fields = fields;
         }
-      
+
 
         public List<Field> Fields { get; }
 

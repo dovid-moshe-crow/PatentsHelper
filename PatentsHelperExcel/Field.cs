@@ -30,58 +30,43 @@ namespace PatentsHelperExcel
         {
             get
             {
-                if (Type == Types.Text || Type == Types.Email)
+                switch (Type)
                 {
-                    return Text;
+                    case Types.Text:
+                    case Types.Email:
+                        return Text;
+                    case Types.Bool:
+                        return Bool;
+                    case Types.DateTime:
+                        return DateTime;
+                    case Types.TimeSpan:
+                        return TimeSpan;
+                    case Types.Number:
+                        return Number;
+                    default:
+                        return null;
                 }
-
-                if (Type == Types.Bool)
-                {
-                    return Bool;
-                }
-
-                if (Type == Types.DateTime)
-                {
-                    return DateTime;
-                }
-
-                if (Type == Types.TimeSpan)
-                {
-                    return TimeSpan;
-                }
-
-                if (Type == Types.Number)
-                {
-                    return Number;
-                }
-
-                return null;
             }
             set
             {
-                if (Type == Types.Text || Type == Types.Email)
+                switch (Type)
                 {
-                    Text = value?.ToString();
-                }
-
-                if (Type == Types.Bool)
-                {
-                    Bool = (bool?)value;
-                }
-
-                if (Type == Types.DateTime)
-                {
-                   DateTime = (DateTime?)value;
-                }
-
-                if (Type == Types.TimeSpan)
-                {
-                    TimeSpan = (TimeSpan?)value;
-                }
-
-                if (Type == Types.Number)
-                {
-                    Number = (double?)value;
+                    case Types.Text:
+                    case Types.Email:
+                        Text = value?.ToString();
+                        break;
+                    case Types.Bool:
+                        Bool = (bool?)value;
+                        break;
+                    case Types.DateTime:
+                        DateTime = (DateTime?)value;
+                        break;
+                    case Types.TimeSpan:
+                        TimeSpan = (TimeSpan?)value;
+                        break;
+                    case Types.Number:
+                        Number = (double?)value;
+                        break;
                 }
             }
         }

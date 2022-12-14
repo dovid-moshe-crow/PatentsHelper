@@ -89,8 +89,8 @@ namespace PatentsHelperOutlook
                 string scope = new UserSettings().SearchFolderScope;
 
                 var sfolder = outlookApp.AdvancedSearch(scope, filter, true, caseId);
-                sfolder.Save(caseId);
-
+                var a = sfolder.Save(caseId);
+               
                 ReleaseObj(outlookApp);
             });
             t.Start();
@@ -108,7 +108,6 @@ namespace PatentsHelperOutlook
         }
 
 
-
         public static Application OutlookApp
         {
             get
@@ -120,7 +119,7 @@ namespace PatentsHelperOutlook
                 else
                 {
                     return new Application();
-                }
+                } 
             }
         }
 

@@ -95,7 +95,6 @@ namespace PatentsHelperFileSystem.ViewModels
             ClearChildren();
         }
 
-
         private void ClearChildren()
         {
             Children = new ObservableCollection<DirectoryItemViewModel>();

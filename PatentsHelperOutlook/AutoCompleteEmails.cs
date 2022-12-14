@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
+
 namespace PatentsHelperOutlook
 {
     public static class AutoCompleteEmails
@@ -92,6 +93,8 @@ namespace PatentsHelperOutlook
 
                     //read metadata
                     br.ReadBytes(4);
+
+                    
                     //major verion number should be 12
                     int majorVersionNumber = br.ReadInt32();
                     //minor verion number should be 0
@@ -112,6 +115,8 @@ namespace PatentsHelperOutlook
 
                             //read Reserved Data
                             br.ReadBytes(4);
+
+                           
 
                             byte[] unionData = br.ReadBytes(8);
 
