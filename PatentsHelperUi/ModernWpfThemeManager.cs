@@ -1,4 +1,8 @@
-﻿namespace PatentsHelperUi
+﻿using System;
+using System.Threading;
+using System.Windows;
+
+namespace PatentsHelperUi
 {
     public static class ModernWpfThemeManager
     {
@@ -11,15 +15,27 @@
 
         public static void StartTheme(int themeId)
         {
-            if (themeId == 0)
-            {
-                ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
-            }
-            else
-            {
-                ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
-            }
+
+         
+                if (themeId == 0)
+                {
+                    ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Light;
+            
+                }
+                else
+                {
+                    ModernWpf.ThemeManager.Current.ApplicationTheme = ModernWpf.ApplicationTheme.Dark;
+
+                }
+
         }
+    
+             
+
+
+
+
+        
 
 
     }

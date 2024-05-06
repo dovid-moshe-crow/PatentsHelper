@@ -1,8 +1,10 @@
 ﻿using PatentsHelperFileSystem;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Forms;
@@ -32,6 +34,17 @@ namespace PatentsHelperSettings
             {
                 CasesRootFolder = path + @"\";
                 OnPropertyChanged(nameof(CasesRootFolder));
+            }
+        });
+
+
+        public ICommand PatentsHelperRootFolderCommand => new RelayCommand<object>(() =>
+        {
+            var path = FsUtils.PickFolder(PatentsHelperRootFolder);
+            if (!string.IsNullOrEmpty(path))
+            {
+                PatentsHelperRootFolder = path + @"\";
+                OnPropertyChanged(nameof(PatentsHelperRootFolder));
             }
         });
 
@@ -82,6 +95,23 @@ namespace PatentsHelperSettings
             {
                 Properties.Settings.Default.CasesRootFolder = value;
                 OnPropertyChanged(nameof(CasesRootFolder));
+            }
+        }
+
+        public string PatentsHelperRootFolder
+        {
+            get 
+            {
+                if (string.IsNullOrEmpty(Properties.Settings.Default.PatentsHelperRootFolder))
+                {
+                    Properties.Settings.Default.PatentsHelperRootFolder = Path.Combine(Path.GetPathRoot(Environment.SystemDirectory), "patents-helper-files");
+                }
+                return Properties.Settings.Default.PatentsHelperRootFolder;
+            }
+            set
+            {
+                Properties.Settings.Default.PatentsHelperRootFolder = value;
+                OnPropertyChanged(nameof(PatentsHelperRootFolder));
             }
         }
 

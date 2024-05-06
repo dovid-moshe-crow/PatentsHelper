@@ -251,7 +251,7 @@ namespace PatentsHelperUi.Pages
                 }
 
                 var filteredRows = filterdCasesDataTable?.AsEnumerable().DefaultIfEmpty()
-                   ?.Where(dr => dr.ItemArray.Any(s => string.IsNullOrEmpty(Filter) || Fuzz.PartialRatio(s.ToString()?.ToLower() ?? string.Empty, Filter?.ToLower()) > 90));
+                   ?.Where(dr => (dr?.ItemArray?.Any(s => string.IsNullOrEmpty(Filter) || Fuzz.PartialRatio(s.ToString()?.ToLower() ?? string.Empty, Filter?.ToLower()) > 90)) == true);
 
                 switch (SortOptions)
                 {

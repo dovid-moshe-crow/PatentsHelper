@@ -43,6 +43,12 @@
                            <ui:FontIcon Glyph="&#xEC50;"/>
                         </Button>
                     </ui:SimpleStackPanel>
+                    <ui:SimpleStackPanel Orientation="Horizontal" Margin="0,0,0,10"  >
+                        <TextBox Width="472" ui:ControlHelper.Header="Patents Helper root folder" IsReadOnly="True" Text="{Binding PatentsHelperRootFolder, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" />
+                        <Button Style="{StaticResource DateTimePickerFlyoutButtonStyle}" Height="30" Width="30" VerticalAlignment="Bottom" Command="{Binding PatentsHelperRootFolderCommand}">
+                            <ui:FontIcon Glyph="&#xEC50;"/>
+                        </Button>
+                    </ui:SimpleStackPanel>
                     <TextBox  ui:ControlHelper.Header="Cases email columns" Text="{Binding CasesEmailsColumns,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="400" HorizontalAlignment="Left" Margin="0,0,0,10" />
                     <TextBox ui:ControlHelper.Header="Search Folder Scope" Width="400" HorizontalAlignment="Left" Margin="0,0,0,10" Text="{Binding SearchFolderScope, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
                 </ui:SimpleStackPanel>

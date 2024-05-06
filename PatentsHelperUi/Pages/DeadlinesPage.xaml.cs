@@ -85,7 +85,7 @@ namespace PatentsHelperUi.Pages
 
                 var rows = filterdDeadlinesDataTable?.AsEnumerable()
                     ?.DefaultIfEmpty()
-                    ?.Where(dr => dr.ItemArray.Any(s => string.IsNullOrEmpty(Filter) || Fuzz.PartialRatio(s.ToString()?.ToLower() ?? string.Empty, Filter?.ToLower()) > 90));
+                    ?.Where(dr => (dr?.ItemArray?.Any(s => string.IsNullOrEmpty(Filter) || Fuzz.PartialRatio(s.ToString()?.ToLower() ?? string.Empty, Filter?.ToLower()) > 90)) == true);
                 if (rows?.Any() == true)
                 {
                     return rows.CopyToDataTable().AsDataView();

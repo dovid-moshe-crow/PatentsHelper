@@ -8,9 +8,8 @@ namespace PatentsHelperCases
 {
     public static class CasesManager
     {
-        public static string RootFolder { get; set; } = Path.Combine(Path.GetPathRoot(AppDomain.CurrentDomain.BaseDirectory), @"patents-helper-files");
         public static string FileName { get; set; } = "cases.xlsx";
-        public static string FullPath { get; set; } = Path.Combine(RootFolder, FileName);
+        public static string FullPath => Path.Combine(new UserSettings().PatentsHelperRootFolder, FileName);
         public static string TableName { get; set; } = "cases";
 
         /// <summary>

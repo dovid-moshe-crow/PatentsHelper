@@ -1,4 +1,5 @@
 ﻿using PatentsHelperSettings;
+using System.Threading;
 using System.Windows.Controls;
 
 namespace PatentsHelperUi.Pages
@@ -20,7 +21,15 @@ namespace PatentsHelperUi.Pages
         {
             var themeId = (sender as ModernWpf.Controls.RadioButtons).SelectedIndex;
 
-            ModernWpfThemeManager.StartTheme(themeId);
+      
+                // ModernWpfThemeManager.StartTheme(themeId);
+
+               
+
+
+
+
+
         }
     }
 }
