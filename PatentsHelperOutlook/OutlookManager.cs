@@ -16,7 +16,7 @@ namespace PatentsHelperOutlook
 {
     public static class OutlookManager
     {
-        public static string EMAIL_TEMPLATES_PATH => Path.Combine(Path.GetPathRoot(AppDomain.CurrentDomain.BaseDirectory), Path.Combine(new UserSettings().PatentsHelperRootFolder, @"\email-templates"));
+        public static string EMAIL_TEMPLATES_PATH => Path.Combine(new UserSettings().PatentsHelperRootFolder, @"email-templates");
 
 
         public static List<EmailTemplate> EmailTemplates

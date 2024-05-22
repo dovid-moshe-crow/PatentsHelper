@@ -33,12 +33,12 @@
     <IsWebBootstrapper>True</IsWebBootstrapper>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <PublishUrl>publish\</PublishUrl>
-    <InstallUrl>https://b4cc1t-ip-147-235-196-193.tunnelmole.net/</InstallUrl>
+    <InstallUrl>https://o4jmnq-ip-147-235-196-193.tunnelmole.net/</InstallUrl>
     <TargetCulture>en</TargetCulture>
-    <ApplicationVersion>1.0.0.19</ApplicationVersion>
+    <ApplicationVersion>1.0.0.22</ApplicationVersion>
     <AutoIncrementApplicationRevision>true</AutoIncrementApplicationRevision>
     <UpdateEnabled>false</UpdateEnabled>
-    <UpdateInterval>1</UpdateInterval>
+    <UpdateInterval>0</UpdateInterval>
     <UpdateIntervalUnits>days</UpdateIntervalUnits>
     <ProductName>PatentsHelper</ProductName>
     <PublisherName />
